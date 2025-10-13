@@ -87,7 +87,7 @@ clean_dataset:
 
 ## Make FE
 .PHONY: FE
-clean_dataset:
+FE:
 	$(PYTHON_INTERPRETER) MLFlow/DVC/features.py
 
 
