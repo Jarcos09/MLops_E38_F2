@@ -12,9 +12,8 @@ logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
 RAW_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "raw"
-INTERIM_DATA_DIR = DATA_DIR / "interim"
+INTERIM_DATA_DIR = DATA_DIR / "MLops_E38_F2" / "data" /"interim"
 PROCESSED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "processed"
-CLEANED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "cleaned"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 
 MODELS_DIR = PROJ_ROOT / "models"
