@@ -5,10 +5,12 @@ from pathlib import Path
 from loguru import logger
 from tqdm import tqdm
 
+sys.path.append(str(Path(__file__).resolve().parents[2]))
+
 # CLEANED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "cleaned"
 from MLFlow.DVC.config import CLEANED_DATA_DIR, RAW_DATA_DIR 
 
-sys.path.append(str(Path(__file__).resolve().parents[2]))
+
 
 # Nombre del archivo local
 FILENAME_CLEANED = "energy_modified_clean.csv"
