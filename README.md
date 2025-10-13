@@ -107,6 +107,6 @@ make data
 ```
 Realizar limpieza del Dataset:
 ```bash
-Make clean_dataset
+make clean_dataset
 ```
 --------
