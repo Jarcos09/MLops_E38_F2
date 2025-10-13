@@ -52,7 +52,7 @@ def main():
             # Altamente sesgada → mediana
             df_modified[col] = df_modified[col].fillna(df_modified[col].median())
 
-    logger.info(f"Guardando Dataset en {INTERIM_DATA_DIR / FILENAME_CLEANED}")
+    logger.success(f"Guardando Dataset en {INTERIM_DATA_DIR / FILENAME_CLEANED}")
     df_modified.to_csv(INTERIM_DATA_DIR / FILENAME_CLEANED, index=False)
 
 
