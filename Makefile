@@ -80,6 +80,9 @@ create_environment:
 data: requirements
 	$(PYTHON_INTERPRETER) MLFlow/DVC/dataset.py
 
+## Make clean
+	$(PYTHON_INTERPRETER) MLFlow/DVC/cleaning.py
+
 
 #################################################################################
 # Self Documenting Commands                                                     #
