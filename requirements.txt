@@ -1,16 +1,42 @@
-ipython
-jupyterlab
-loguru
-matplotlib
-mkdocs
-notebook
-numpy
-pandas
-pip
-pytest
-python-dotenv
-ruff
-scikit-learn
-tqdm
-typer
--e .
+# Ciencia de datos y análisis numérico
+
+numpy==2.1.2
+pandas==2.3.2
+scikit-learn==1.7.1
+scipy==1.16.1
+matplotlib==3.10.6
+seaborn==0.13.2
+xgboost==2.0.3
+# Nota: La versión se estableció en 2.0.3 como un buen ejemplo actual
+
+# Experimentación, validación y monitoreo de modelos
+
+mlflow==3.3.2
+evidently==0.7.14
+deepchecks==0.19.1
+
+# Generación de datos sintéticos
+
+sdv==1.26.0
+
+# Entorno interactivo y notebooks
+
+jupyterlab==4.4.9
+ipykernel==6.30.1
+
+# Gestión de proyectos y flujo de trabajo
+
+dvc==3.63.0
+dvc-gdrive ==3.0.1
+dvc[s3]
+dvc[gdrive]
+cookiecutter-data-science==2.3.0
+gdown==5.2.0
+
+# Pruebas y aseguramiento de calidad
+
+pytest==8.4.2
+
+# APIs y servicios web
+
+fastapi==0.116.1

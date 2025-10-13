@@ -59,3 +59,36 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 
 --------
 
+# Fase 2 | Avance de Proyecto
+# Equipo 38
+
+En esta actividad se continuará con el desarrollo del proyecto, dando seguimiento a los avances realizados en la Fase 1. Se mantendrá la propuesta de valor, el análisis elaborado con el ML Canvas, así como los datos, modelos y experimentos previamente desarrollados. El objetivo ahora es estructurar el proyecto de Machine Learning de forma profesional, aplicando buenas prácticas como la refactorización del código, el control de versiones, el seguimiento de experimentos, el registro de métricas y modelos, y el aseguramiento de la reproducibilidad.
+
+--------
+
+## 🎯 Objetivos
+
+- Continuar con el desarrollo de proyectos de Machine Learning, a partir de los requerimientos, una propuesta de valor y un conjunto de datos preprocesados.
+- Estructurar proyectos de Machine Learning de manera organizada (utilizando el template de Cookiecutter)
+- Aplicar buenas prácticas de codificación en cada etapa del pipeline y realizar Refactorización del código.
+- Registrar métricas y aplicar control de versiones  a los experimentos utilizando herramientas de loging y tracking  (MLFlow/DVC)
+- Visualizar y comparar resultados (métricas) y gestionar el registro de los modelos (Data Registry MLFlow/DVC)
+
+--------
+
+## Roles del Equipo
+| Integrante | Matrícula | Rol |
+|---|---|---|
+| Jaime Alejandro Mendívil Altamirano| `A01253316` | SRE / DevOps |
+| Christian Erick Mercado Flores | `A00841954` | Software Engineer  |
+| Saul Mora Perea | `A01796295` | Data Engineer  |
+| Juan Carlos Pérez Nava | `A01795941` | Data Scientist  |
+| Mario Javier Soriano Aguilera | `A01384282` | ML Engineer  |
+
+--------
+
+## Instalar paqueterías
+```bash
+pip install -r requirements.txt
+```
+
