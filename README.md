@@ -96,3 +96,15 @@ pip install -r requirements.txt --quiet
 git clone https://github.com/Jarcos09/MLops_E38_F2.git
 cd MLops_E38_F2/
 ```
+
+--------
+
+## Makefile
+```bash
+#Para Descargar Dataset:
+make install
+
+#Para realizar limpieza del Dataset:
+Make clean_dataset
+```
+--------
