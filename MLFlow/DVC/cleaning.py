@@ -13,7 +13,8 @@ from MLFlow.DVC.config import CLEANED_DATA_DIR, RAW_DATA_DIR
 
 app = typer.Typer()
 
-# Nombre del archivo local
+# Nombre de los archivos locales
+FILENAME_MODIFIED = "energy_modified.csv"
 FILENAME_CLEANED = "energy_modified_clean.csv"
 
 # Ruta donde se guardará el archivo (carpeta cleaned dentro de MLops_E38_F2 en el home)
@@ -26,7 +27,7 @@ def main():
     logger.info("Cargando dataset original")
     
     # Cargar dataset original
-    df_modified = pd.read_csv(RAW_DATA_DIR)
+    df_modified = pd.read_csv(RAW_DATA_DIR / FILENAME_MODIFIED)
   
     # Reemplazamos strings vacíos o con espacios por NaN
     df_modified.replace(r'^\s*$', np.nan, regex=True, inplace=True)
