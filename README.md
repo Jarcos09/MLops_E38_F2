@@ -89,6 +89,6 @@ En esta actividad se continuará con el desarrollo del proyecto, dando seguimien
 
 ## Instalar paqueterías
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt --quiet
 ```
 
