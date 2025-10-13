@@ -22,14 +22,11 @@ CLEANED_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no exi
 
 
 @app.command()
-def main(
-    input_path: Path = RAW_DATA_DIR / "dataset.csv",
-    output_path: Path = CLEANED_DATA_DIR / "dataset.csv",
-):
+def main():
     logger.info("Cargando dataset original")
     
     # Cargar dataset original
-    df_modified = pd.read_csv(input_path)
+    df_modified = pd.read_csv(RAW_DATA_DIR)
   
     # Reemplazamos strings vacíos o con espacios por NaN
     df_modified.replace(r'^\s*$', np.nan, regex=True, inplace=True)
