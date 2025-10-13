@@ -11,7 +11,7 @@ from tqdm import tqdm
 sys.path.append(str(Path(__file__).resolve().parents[2]))
 
 # CLEANED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "cleaned"
-from MLFlow.DVC.config import CLEANED_DATA_DIR, RAW_DATA_DIR 
+from MLFlow.DVC.config import INTERIM_DATA_DIR, RAW_DATA_DIR 
 
 app = typer.Typer()
 
@@ -20,7 +20,7 @@ FILENAME_MODIFIED = "energy_modified.csv"
 FILENAME_CLEANED = "energy_modified_clean.csv"
 
 # Ruta donde se guardará el archivo (carpeta cleaned dentro de MLops_E38_F2 en el home)
-CLEANED_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no existe
+INTERIM_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no existe
 
 
 @app.command()
@@ -52,8 +52,8 @@ def main():
             # Altamente sesgada → mediana
             df_modified[col] = df_modified[col].fillna(df_modified[col].median())
 
-    logger.info(f"Guardando Dataset en {CLEANED_DATA_DIR / FILENAME_CLEANED}")
-    df_modified.to_csv(CLEANED_DATA_DIR / FILENAME_CLEANED, index=False)
+    logger.info(f"Guardando Dataset en {INTERIM_DATA_DIR / FILENAME_CLEANED}")
+    df_modified.to_csv(INTERIM_DATA_DIR / FILENAME_CLEANED, index=False)
 
 
 if __name__ == "__main__":
