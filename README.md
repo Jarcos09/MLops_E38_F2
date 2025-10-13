@@ -103,7 +103,7 @@ cd MLops_E38_F2/
 
 Descargar Dataset:
 ```bash
-make install
+make data
 ```
 Realizar limpieza del Dataset:
 ```bash
