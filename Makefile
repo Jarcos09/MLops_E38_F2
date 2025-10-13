@@ -85,6 +85,11 @@ data: requirements
 clean_dataset:
 	$(PYTHON_INTERPRETER) MLFlow/DVC/cleaning.py
 
+## Make FE
+.PHONY: FE
+clean_dataset:
+	$(PYTHON_INTERPRETER) MLFlow/DVC/features.py
+
 
 #################################################################################
 # Self Documenting Commands                                                     #
