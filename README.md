@@ -91,4 +91,8 @@ En esta actividad se continuará con el desarrollo del proyecto, dando seguimien
 ```bash
 pip install -r requirements.txt --quiet
 ```
-
+## Clonar repositorio
+```bash
+git clone https://github.com/Jarcos09/MLops_E38.git
+cd MLops_E38/
+```
