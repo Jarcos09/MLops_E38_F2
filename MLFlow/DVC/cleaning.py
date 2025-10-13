@@ -1,5 +1,6 @@
 import sys 
 import os
+import pandas as pd
 import typer
 from pathlib import Path
 from loguru import logger
