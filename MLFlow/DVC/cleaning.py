@@ -29,7 +29,7 @@ def main(
     logger.info("Cargando dataset original")
     
     # Cargar dataset original
-    df_modified = pd.read_csv(ruta_modified)
+    df_modified = pd.read_csv(input_path)
   
     # Reemplazamos strings vacíos o con espacios por NaN
     df_modified.replace(r'^\s*$', np.nan, regex=True, inplace=True)
