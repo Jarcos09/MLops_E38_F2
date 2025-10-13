@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 sys.path.append(str(Path(__file__).resolve().parents[2]))
 
-# CLEANED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "cleaned"
+
 from MLFlow.DVC.config import INTERIM_DATA_DIR, RAW_DATA_DIR 
 
 app = typer.Typer()
@@ -21,6 +21,7 @@ FILENAME_CLEANED = "energy_modified_clean.csv"
 
 # Ruta donde se guardará el archivo (carpeta cleaned dentro de MLops_E38_F2 en el home)
 INTERIM_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no existe
+
 
 
 @app.command()

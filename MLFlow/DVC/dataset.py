@@ -20,23 +20,22 @@ ID_DATASET_MODIFIED = "1OuJHPpn2Wv5EhlL1J98HWYyPJM-iL8Ds"
 FILENAME_MODIFIED = "energy_modified.csv"
 
 # Ruta donde se guardará el archivo (carpeta RAW dentro de MLops_E38_F2 en el home)
-RAW_DIR = Path.home() / "MLops_E38_F2" / "data" / "raw"
-RAW_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no existe
+RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no existe
 
-MODIFIED_PATH = RAW_DIR / FILENAME_MODIFIED
+RAW_PATH = RAW_DATA_DIR / FILENAME_MODIFIED
+
 
 
 @app.command()
 def main(
-    input_path: Path = RAW_DATA_DIR / "dataset.csv",
-    output_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
+    input_path: Path = RAW_PATH,
 ):
     logger.info("Iniciando descarga del dataset desde Google Drive...")
 
     # Descarga del archivo
-    gdown.download(id=ID_DATASET_MODIFIED, output=str(MODIFIED_PATH), quiet=True)
+    gdown.download(id=ID_DATASET_MODIFIED, output=str(RAW_PATH), quiet=True)
 
-    logger.success(f"Archivo descargado exitosamente en: {MODIFIED_PATH}")
+    logger.success(f"Archivo descargado exitosamente en: {RAW_PATH}")
 
 if __name__ == "__main__":
     app()

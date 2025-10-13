@@ -11,8 +11,8 @@ PROJ_ROOT = Path(__file__).resolve().parents[1]
 logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
-RAW_DATA_DIR = DATA_DIR / "raw"
-INTERIM_DATA_DIR = DATA_DIR /"interim"
+RAW_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "raw"
+INTERIM_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "interim"
 PROCESSED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 
