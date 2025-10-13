@@ -1,4 +1,5 @@
-# Ciencia de datos y análisis numérico
+# -*- coding: UTF-8 -*-
+# Ciencia de datos y anÃ¡lisis numÃ©rico
 
 numpy==2.1.2
 pandas==2.3.2
@@ -7,15 +8,14 @@ scipy==1.16.1
 matplotlib==3.10.6
 seaborn==0.13.2
 xgboost==2.0.3
-# Nota: La versión se estableció en 2.0.3 como un buen ejemplo actual
 
-# Experimentación, validación y monitoreo de modelos
+# ExperimentaciÃ³n, validaciÃ³n y monitoreo de modelos
 
 mlflow==3.3.2
 evidently==0.7.14
 deepchecks==0.19.1
 
-# Generación de datos sintéticos
+# GeneraciÃ³n de datos sintÃ©ticos
 
 sdv==1.26.0
 
@@ -24,7 +24,7 @@ sdv==1.26.0
 jupyterlab==4.4.9
 ipykernel==6.30.1
 
-# Gestión de proyectos y flujo de trabajo
+# GestiÃ³n de proyectos y flujo de trabajo
 
 dvc==3.63.0
 dvc-gdrive ==3.0.1
