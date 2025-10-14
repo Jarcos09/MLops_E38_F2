@@ -30,6 +30,14 @@ preprocessing:
     sparse_output: false
     handle_unknown: "ignore"
 
+training:
+  model_filename: "model_xgb.pkl"
+  random_state: 42
+  metrics_file_xgb: "metrics_xgb.txt"
+  experiment_name: "xgb_multioutput"
+
+
+
 split:
   test_size: 0.2
   random_state: 42
