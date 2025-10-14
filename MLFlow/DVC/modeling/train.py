@@ -2,12 +2,24 @@ from pathlib import Path
 
 from loguru import logger
 from tqdm import tqdm
-import typer
 
-from MLFlow/DVC.config import MODELS_DIR, PROCESSED_DATA_DIR
+import typer
+import sys
+
+# Rutas de configuración
+sys.path.append(str(Path(__file__).resolve().parents[3]))
+
+from MLFlow.DVC.config import MODELS_DIR, PROCESSED_DATA_DIR
 
 app = typer.Typer()
 
+
+def load_params():
+    with open("params.yaml", 'r') as ymlfile:
+        cfg = yaml.safe_load(ymlfile)
+    return cfg
+
+params = load_params()
 
 @app.command()
 def main(
@@ -17,14 +29,8 @@ def main(
     model_path: Path = MODELS_DIR / "model.pkl",
     # -----------------------------------------
 ):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
-    logger.info("Training some model...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
-    logger.success("Modeling training complete.")
-    # -----------------------------------------
 
+    logger.info(f"Cargando dataset original de {RAW_DATA_DIR / FILENAME_MODIFIED}")
 
 if __name__ == "__main__":
     app()
