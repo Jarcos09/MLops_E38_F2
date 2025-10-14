@@ -90,6 +90,10 @@ clean_data:
 FE:
 	$(PYTHON_INTERPRETER) MLFlow/DVC/features.py
 
+## Make train
+.PHONY: train
+train:
+	$(PYTHON_INTERPRETER) MLFlow/DVC/modeling/train.py
 
 #################################################################################
 # Self Documenting Commands                                                     #
