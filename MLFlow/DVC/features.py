@@ -1,105 +1,89 @@
 # -*- coding: utf-8 -*-
 
-import sys 
-import os
-import numpy as np
+import sys
 import pandas as pd
-
+import numpy as np
+import warnings
 from pathlib import Path
-
 from loguru import logger
-from tqdm import tqdm
 import typer
 
 from sklearn.preprocessing import OneHotEncoder, PowerTransformer
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
-import warnings
+# Configuraci贸n general
 warnings.filterwarnings('ignore')
-
-sys.path.append(str(Path(__file__).resolve().parents[2]))
-
-from MLFlow.DVC.config import PROCESSED_DATA_DIR, INTERIM_DATA_DIR
-
-
-
-FILENAME_INTERIM = "energy_modified_clean.csv"
-FILENAME_PROCESSED = "energy_modified_processed.csv"
-
 app = typer.Typer()
 
+# Rutas de configuraci贸n
+sys.path.append(str(Path(__file__).resolve().parents[2]))
+from MLFlow.DVC.config import PROCESSED_DATA_DIR, INTERIM_DATA_DIR
 
+PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+# Archivos
+FILENAME_INTERIM = "energy_modified_clean.csv"
+FILENAME_Xtrain = "Xtrain_processed.csv"
+FILENAME_Xtest = "Xtest_processed.csv"
+FILENAME_ytrain = "ytrain_processed.csv"
+FILENAME_ytest = "ytest_processed.csv"
 
 @app.command()
 def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
     input_path: Path = INTERIM_DATA_DIR / FILENAME_INTERIM,
-    output_path: Path = PROCESSED_DATA_DIR / FILENAME_PROCESSED,
-    # -----------------------------------------
+    output_Xtrain: Path = PROCESSED_DATA_DIR / FILENAME_Xtrain,
+    output_Xtest: Path = PROCESSED_DATA_DIR / FILENAME_Xtest,
+    output_ytrain: Path = PROCESSED_DATA_DIR / FILENAME_ytrain,
+    output_ytest: Path = PROCESSED_DATA_DIR / FILENAME_ytest,
 ):
+    logger.info(f"Cargando dataset limpio desde: {input_path}")
 
-    logger.info(f"Cargando dataset limpio de {input_path}")
-
+    # Par谩metros de partici贸n
     test_size = 0.2
     random_state = 42
 
-    df= pd.read_csv(input_path)
+    # Carga de datos
+    df = pd.read_csv(input_path)
 
-    # 1) Separar features y variables objetivo, eliminando columna de poco valor predictivo
-    X = df.drop(columns=["Y1", "Y2", "mixed_type_col"])         # Features independientes
+    # Separaci贸n de variables
+    X = df.drop(columns=["Y1", "Y2", "mixed_type_col"])
     y = df[["Y1", "Y2"]].copy()
 
-    # 2) Convertir todas las columnas de X a tipo 'category'
+    # Conversi贸n a categor铆as
     cat_features = X.columns.tolist()
-    for col in cat_features:
-        # Preparaci髇 para One-Hot Encoding
-        X[col] = X[col].astype("category")
+    X[cat_features] = X[cat_features].astype("category")
 
-
-    # 3) Definir ColumnTransformer para OHE
+    # Preprocesamiento con One-Hot Encoding
     preprocessor = ColumnTransformer(
         transformers=[
-            ("cat",
-             OneHotEncoder(drop="first", sparse_output=False, handle_unknown='ignore'),
-             cat_features)
+            ("cat", OneHotEncoder(drop="first", sparse_output=False, handle_unknown='ignore'), cat_features)
         ],
         remainder='drop'
     )
 
-    # 4) Dividir en conjuntos de entrenamiento y prueba antes de OHE
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state
-    )
+    # Divisi贸n de datos
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
+    # Transformaci贸n Yeo-Johnson
+    yao = PowerTransformer(method='yeo-johnson')
+    y_train = pd.DataFrame(yao.fit_transform(y_train), columns=y.columns, index=y_train.index)
+    y_test = pd.DataFrame(yao.transform(y_test), columns=y.columns, index=y_test.index)
 
-# 5) Transformaci髇 Yeo-Johnson para variables objetivo
-    yao_transformer = PowerTransformer(method='yeo-johnson')
-    yao_transformer.fit(y_train)                                # Ajustar transformador sobre entrenamiento
-    y_train = pd.DataFrame(
-        yao_transformer.transform(y_train),
-        columns=["Y1", "Y2"],
-        index=y_train.index
-    )
-    y_test = pd.DataFrame(
-        yao_transformer.transform(y_test),
-        columns=["Y1", "Y2"],
-        index=y_test.index
-    )
+    # Pipeline de preprocesamiento
+    pipeline = Pipeline(steps=[("preprocessor", preprocessor)])
+    X_train_proc = pipeline.fit_transform(X_train)
+    X_test_proc = pipeline.transform(X_test)
 
-    # 6) Pipeline para OHE de X
-    full_pipeline = Pipeline(steps=[
-        ("preprocessor", preprocessor)
-    ])
-    X_train_processed = full_pipeline.fit_transform(X_train)    # Ajuste y transformaci髇 en entrenamiento
-    X_test_processed = full_pipeline.transform(X_test)
-    
-    print(X_train_processed.shape)
-    print(X_test_processed.shape)
-    print(y_train.shape)
-    print(y_test.shape)
+    # Guardado de datos procesados
+    feature_names = pipeline.named_steps['preprocessor'].get_feature_names_out()
+    pd.DataFrame(X_train_proc, columns=feature_names, index=X_train.index).to_csv(output_Xtrain, index=False)
+    pd.DataFrame(X_test_proc, columns=feature_names, index=X_test.index).to_csv(output_Xtest, index=False)
+    y_train.to_csv(output_ytrain, index=False)
+    y_test.to_csv(output_ytest, index=False)
+
+    logger.success("Preprocesamiento completado y archivos guardados.")
 
 if __name__ == "__main__":
     app()
