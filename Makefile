@@ -81,8 +81,8 @@ data: requirements
 	$(PYTHON_INTERPRETER) MLFlow/DVC/dataset.py
 
 ## Make clean
-.PHONY: clean_dataset
-clean_dataset:
+.PHONY: clean_data
+clean_data:
 	$(PYTHON_INTERPRETER) MLFlow/DVC/cleaning.py
 
 ## Make FE
