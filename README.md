@@ -12,6 +12,7 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 ├── LICENSE            <- Open-source license if one is chosen
 ├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
+├── params.yaml        <- Centralized configuration file for pipeline parameters.
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
@@ -111,6 +112,6 @@ make clean_dataset
 ```
 Ejecuta data → clean_data → FE
 ```bash
-Make prepare
+make prepare
 ```
 --------
