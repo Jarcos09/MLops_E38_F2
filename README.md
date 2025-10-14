@@ -109,4 +109,8 @@ Realizar limpieza del Dataset:
 ```bash
 make clean_dataset
 ```
+ejecuta data → clean_data → FE
+```bash
+Make prepare
+```
 --------
