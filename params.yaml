@@ -4,6 +4,10 @@ data:
   drop_columns: ["mixed_type_col"]
   target_columns: ["Y1", "Y2"]
 
+download:
+  dataset_id: "1OuJHPpn2Wv5EhlL1J98HWYyPJM-iL8Ds"
+  filename: "energy_modified.csv"
+
 split:
   test_size: 0.2
   random_state: 42
