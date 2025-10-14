@@ -95,6 +95,10 @@ FE:
 train:
 	$(PYTHON_INTERPRETER) MLFlow/DVC/modeling/train.py
 
+## Make prepare: ejecuta data → clean_data → FE
+.PHONY: prepare
+prepare: data clean_data FE
+
 #################################################################################
 # Self Documenting Commands                                                     #
 #################################################################################
