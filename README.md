@@ -114,7 +114,7 @@ Ejecuta data → clean_data → FE
 ```bash
 make prepare
 ```
-realizar entrenamiento
+Realizar entrenamiento
 ```bash
 make train
 ```
