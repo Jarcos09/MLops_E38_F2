@@ -108,7 +108,11 @@ make data
 ```
 Realizar limpieza del Dataset:
 ```bash
-make clean_dataset
+make clean_data
+```
+Realizar FE:
+```bash
+make FE
 ```
 Ejecuta data → clean_data → FE
 ```bash
