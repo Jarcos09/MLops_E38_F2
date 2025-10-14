@@ -1,61 +1,56 @@
-import sys 
-import os
+# clean_dataset.py
+import sys
 import numpy as np
 import pandas as pd
 import typer
+import yaml
 from pathlib import Path
 from scipy.stats import skew
 from loguru import logger
-from tqdm import tqdm
 
+# Ajuste de ruta para importar configuración institucional
 sys.path.append(str(Path(__file__).resolve().parents[2]))
-
-
-from MLFlow.DVC.config import INTERIM_DATA_DIR, RAW_DATA_DIR 
+from MLFlow.DVC.config import INTERIM_DATA_DIR, RAW_DATA_DIR
 
 app = typer.Typer()
 
-# Nombre de los archivos locales
-FILENAME_MODIFIED = "energy_modified.csv"
-FILENAME_CLEANED = "energy_modified_clean.csv"
-
-# Ruta donde se guardará el archivo (carpeta cleaned dentro de MLops_E38_F2 en el home)
-INTERIM_DATA_DIR.mkdir(parents=True, exist_ok=True)  # Crea la carpeta si no existe
-
-
+# Cargar parámetros desde params.yaml
+def load_params(path: Path = Path(__file__).resolve().parents[2] / "params.yaml") -> dict:
+    with open(path, "r") as f:
+        return yaml.safe_load(f)
 
 @app.command()
 def main():
-    logger.info(f"Cargando dataset original de {RAW_DATA_DIR / FILENAME_MODIFIED}")
-    
-    # Cargar dataset original
-    df_modified = pd.read_csv(RAW_DATA_DIR / FILENAME_MODIFIED)
+    params = load_params()
 
-    # Reemplazamos strings vacíos o con espacios por NaN
-    logger.info("Reemplazando string")
-    df_modified.replace(r'^\s*$', np.nan, regex=True, inplace=True)
+    # Extraer parámetros
+    raw_filename = params["cleaning"]["input_file"]
+    cleaned_filename = params["cleaning"]["output_file"]
+    strategy_threshold = params["cleaning"]["skew_threshold"]
 
-    # Forzamos conversión de todas las columnas a numérico
-    logger.info("Convertir a numéricos")
-    df_modified = df_modified.apply(pd.to_numeric, errors='coerce')
+    input_path = RAW_DATA_DIR / raw_filename
+    output_path = INTERIM_DATA_DIR / cleaned_filename
+    INTERIM_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+    logger.info(f"Cargando dataset original desde: {input_path}")
+    df = pd.read_csv(input_path)
 
-    logger.info("Imputando datos faltantes")
-    for col in df_modified.columns:
-        # Calcular asimetría
-        col_skew = skew(df_modified[col].dropna())
+    logger.info("Reemplazando strings vacíos por NaN")
+    df.replace(r'^\s*$', np.nan, regex=True, inplace=True)
 
-        # Decidir estrategia
-        if -0.5 <= col_skew <= 0.5:
-            # Aproximadamente simétrica → media
-            df_modified[col] = df_modified[col].fillna(df_modified[col].mean())
+    logger.info("Convirtiendo columnas a tipo numérico")
+    df = df.apply(pd.to_numeric, errors='coerce')
+
+    logger.info("Imputando valores faltantes según asimetría")
+    for col in df.columns:
+        col_skew = skew(df[col].dropna())
+        if -strategy_threshold <= col_skew <= strategy_threshold:
+            df[col] = df[col].fillna(df[col].mean())
         else:
-            # Altamente sesgada → mediana
-            df_modified[col] = df_modified[col].fillna(df_modified[col].median())
+            df[col] = df[col].fillna(df[col].median())
 
-    logger.success(f"Guardando Dataset en {INTERIM_DATA_DIR / FILENAME_CLEANED}")
-    df_modified.to_csv(INTERIM_DATA_DIR / FILENAME_CLEANED, index=False)
-
+    logger.success(f"Guardando dataset limpio en: {output_path}")
+    df.to_csv(output_path, index=False)
 
 if __name__ == "__main__":
     app()
