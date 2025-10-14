@@ -1,0 +1,22 @@
+data:
+  input_file: "data/interim/energy_modified_clean.csv"
+  output_dir: "data/processed/"
+  drop_columns: ["mixed_type_col"]
+  target_columns: ["Y1", "Y2"]
+
+split:
+  test_size: 0.2
+  random_state: 42
+
+transform:
+  target_method: "yeo-johnson"
+  encoding:
+    strategy: "onehot"
+    drop: "first"
+    handle_unknown: "ignore"
+    sparse_output: false
+
+metadata:
+  author: "Equipo 38"
+  project: "MLops_E38_F2"
+  version: "1.0.0"
