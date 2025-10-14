@@ -36,12 +36,6 @@ training:
   metrics_file_xgb: "metrics_xgb.txt"
   experiment_name: "xgb_multioutput"
 
-
-
-split:
-  test_size: 0.2
-  random_state: 42
-
 transform:
   target_method: "yeo-johnson"
   encoding:
