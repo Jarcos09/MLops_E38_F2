@@ -1,18 +1,19 @@
 from pathlib import Path
-
 from loguru import logger
 from tqdm import tqdm
 import typer
+import sys
 
-from config import PROCESSED_DATA_DIR, MODELS_DIR
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from config import PROJECT_PATHS
 
 app = typer.Typer()
 
 @app.command()
 def main(
-    features_path: Path = PROCESSED_DATA_DIR / "test_features.csv",
-    model_path: Path = MODELS_DIR / "model.pkl",
-    predictions_path: Path = PROCESSED_DATA_DIR / "test_predictions.csv",
+    features_path: Path = PROJECT_PATHS.PROCESSED / "test_features.csv",
+    model_path: Path = PROJECT_PATHS.MODELS / "model.pkl",
+    predictions_path: Path = PROJECT_PATHS.PROCESSED / "test_predictions.csv",
 ):
     logger.info("Performing inference for model...")
     for i in tqdm(range(10), total=10):

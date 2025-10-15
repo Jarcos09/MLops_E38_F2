@@ -2,7 +2,6 @@
 from pathlib import Path
 from loguru import logger
 import typer
-import yaml
 import sys
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.multioutput import MultiOutputRegressor
@@ -17,7 +16,7 @@ import mlflow
 
 # Rutas de configuración institucional
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-from config import conf, MODELS_DIR, PREPROCESSING_OUTPUT_XTRAIN, PREPROCESSING_OUTPUT_XTEST, PREPROCESSING_OUTPUT_YTRAIN, PREPROCESSING_OUTPUT_YTEST
+from config import conf, PROJECT_PATHS, PREPROCESSING_PATHS, TRAINING_PATHS
 
 app = typer.Typer()
 
@@ -82,8 +81,8 @@ def train_model(
     y_test: pd.DataFrame,
     best_rf_reg,
     random_state=42,
-    metrics_path="metrics_xgb.txt",
-    experiment_name="xgb_multioutput",
+    metrics_path=conf.training.metrics_file_xgb,
+    experiment_name=conf.training.experiment_name,
     registry_model_name="XGBMultiOutputJuan"
 ):
     rf_params = best_rf_reg.estimator.get_params()
@@ -168,11 +167,11 @@ def train_model(
 
 @app.command()
 def main(
-    Xtrain_path: Path =PREPROCESSING_OUTPUT_XTRAIN,
-    Xtest_path: Path = PREPROCESSING_OUTPUT_XTEST,
-    ytrain_path: Path = PREPROCESSING_OUTPUT_YTRAIN,
-    ytest_path: Path = PREPROCESSING_OUTPUT_YTEST,
-    model_path: Path = MODELS_DIR / conf.training.model_filename
+    Xtrain_path: Path = PREPROCESSING_PATHS.X_TRAIN,
+    Xtest_path: Path = PREPROCESSING_PATHS.X_TEST,
+    ytrain_path: Path = PREPROCESSING_PATHS.Y_TRAIN,
+    ytest_path: Path = PREPROCESSING_PATHS.Y_TEST,
+    model_path: Path = TRAINING_PATHS.MODEL_FILE
 ):
     logger.info(f"Cargando características de entrenamiento desde: {Xtrain_path}")
     logger.info(f"Cargando características de prueba desde: {Xtest_path}")
@@ -184,7 +183,6 @@ def main(
     X_test = pd.read_csv(Xtest_path)
     y_train = pd.read_csv(ytrain_path)
     y_test = pd.read_csv(ytest_path)
-
 
     best_model = train_and_evaluate_rf(X_train, X_test, y_train, y_test, random_state=conf.training.random_state)
     train_model(X_train, X_test, y_train, y_test, best_model, random_state=conf.training.random_state)

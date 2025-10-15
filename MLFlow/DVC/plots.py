@@ -1,19 +1,17 @@
 from pathlib import Path
-
 from loguru import logger
 from tqdm import tqdm
 import typer
 
-from MLFlow.DVC.config import conf, PROCESSED_DATA_DIR, FIGURES_DIR
+from MLFlow.DVC.config import PROJECT_PATHS
 
 app = typer.Typer()
-
 
 @app.command()
 def main(
     # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    output_path: Path = FIGURES_DIR / "plot.png",
+    input_path: Path = PROJECT_PATHS.PROCESSED / "dataset.csv",
+    output_path: Path = PROJECT_PATHS.FIGURES / "plot.png",
     # -----------------------------------------
 ):
     # ---- REPLACE THIS WITH YOUR OWN CODE ----

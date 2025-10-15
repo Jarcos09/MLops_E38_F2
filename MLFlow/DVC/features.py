@@ -9,7 +9,7 @@ import yaml
 from pathlib import Path
 from loguru import logger
 import typer
-from config import conf, PROCESSED_DATA_DIR, PREPROCESSING_INPUT_FILE, PREPROCESSING_OUTPUT_XTRAIN, PREPROCESSING_OUTPUT_XTEST, PREPROCESSING_OUTPUT_YTRAIN, PREPROCESSING_OUTPUT_YTEST
+from config import conf, PROJECT_PATHS, PREPROCESSING_PATHS
 
 from sklearn.preprocessing import OneHotEncoder, PowerTransformer
 from sklearn.compose import ColumnTransformer
@@ -20,12 +20,12 @@ from sklearn.pipeline import Pipeline
 warnings.filterwarnings('ignore')
 app = typer.Typer()
 
-PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
+PROJECT_PATHS.PROCESSED.mkdir(parents=True, exist_ok=True)
 
 @app.command()
 def main():
-    logger.info(f"Cargando dataset limpio desde: {PREPROCESSING_INPUT_FILE}")
-    df = pd.read_csv(PREPROCESSING_INPUT_FILE)
+    logger.info(f"Cargando dataset limpio desde: {PREPROCESSING_PATHS.INPUT_FILE}")
+    df = pd.read_csv(PREPROCESSING_PATHS.INPUT_FILE)
 
     # Separación de variables
     X = df.drop(columns=conf.preprocessing.target_columns + conf.preprocessing.drop_columns)
@@ -62,10 +62,10 @@ def main():
 
     # Guardado de datos procesados
     feature_names = pipeline.named_steps['preprocessor'].get_feature_names_out()
-    pd.DataFrame(X_train_proc, columns=feature_names, index=X_train.index).to_csv(PREPROCESSING_OUTPUT_XTRAIN, index=False)
-    pd.DataFrame(X_test_proc, columns=feature_names, index=X_test.index).to_csv(PREPROCESSING_OUTPUT_XTEST, index=False)
-    y_train.to_csv(PREPROCESSING_OUTPUT_YTRAIN, index=False)
-    y_test.to_csv(PREPROCESSING_OUTPUT_YTEST, index=False)
+    pd.DataFrame(X_train_proc, columns=feature_names, index=X_train.index).to_csv(PREPROCESSING_PATHS.X_TRAIN, index=False)
+    pd.DataFrame(X_test_proc, columns=feature_names, index=X_test.index).to_csv(PREPROCESSING_PATHS.X_TEST, index=False)
+    y_train.to_csv(PREPROCESSING_PATHS.Y_TRAIN, index=False)
+    y_test.to_csv(PREPROCESSING_PATHS.Y_TEST, index=False)
 
     logger.success("Preprocesamiento completado y archivos guardados.")
 

@@ -1,25 +1,21 @@
 # clean_dataset.py
-import sys
 import numpy as np
 import pandas as pd
 import typer
 from pathlib import Path
 from scipy.stats import skew
 from loguru import logger
-from config  import conf, INTERIM_DATA_DIR, CLEAN_INPUT_PATH, CLEAN_OUTPUT_PATH
-
-# Ajuste de ruta para importar configuración institucional
-sys.path.append(str(Path(__file__).resolve().parents[2]))
+from config  import conf, PROJECT_PATHS, CLEANING_PATHS
 
 app = typer.Typer()
 
 @app.command()
 def main():
-    INTERIM_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    PROJECT_PATHS.INTERIM.mkdir(parents=True, exist_ok=True)
 
-    logger.info(f"Cargando dataset original desde: {CLEAN_INPUT_PATH}")
+    logger.info(f"Cargando dataset original desde: {CLEANING_PATHS.INPUT_FILE}")
 
-    df = pd.read_csv(CLEAN_INPUT_PATH)
+    df = pd.read_csv(CLEANING_PATHS.INPUT_FILE)
 
     logger.info("Reemplazando strings vacíos por NaN")
 
@@ -38,8 +34,8 @@ def main():
         else:
             df[col] = df[col].fillna(df[col].median())
 
-    logger.success(f"Guardando dataset limpio en: {CLEAN_OUTPUT_PATH}")
-    df.to_csv(CLEAN_OUTPUT_PATH, index=False)
+    logger.success(f"Guardando dataset limpio en: {CLEANING_PATHS.OUTPUT_FILE}")
+    df.to_csv(CLEANING_PATHS.OUTPUT_FILE, index=False)
 
 if __name__ == "__main__":
     app()
