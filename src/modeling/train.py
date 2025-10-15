@@ -13,10 +13,7 @@ import numpy as np
 import pandas as pd
 from loguru import logger
 import mlflow
-
-# Rutas de configuración institucional
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-from config import conf, PROJECT_PATHS, PREPROCESSING_PATHS, TRAINING_PATHS
+from src.config.config import conf, PREPROCESSING_PATHS, TRAINING_PATHS
 
 app = typer.Typer()
 

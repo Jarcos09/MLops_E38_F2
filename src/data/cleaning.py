@@ -5,7 +5,7 @@ import typer
 from pathlib import Path
 from scipy.stats import skew
 from loguru import logger
-from config  import conf, PROJECT_PATHS, CLEANING_PATHS
+from src.config.config  import conf, PROJECT_PATHS, CLEANING_PATHS
 
 app = typer.Typer()
 

@@ -9,7 +9,7 @@ import yaml
 from pathlib import Path
 from loguru import logger
 import typer
-from config import conf, PROJECT_PATHS, PREPROCESSING_PATHS
+from src.config.config import conf, PROJECT_PATHS, PREPROCESSING_PATHS
 
 from sklearn.preprocessing import OneHotEncoder, PowerTransformer
 from sklearn.compose import ColumnTransformer

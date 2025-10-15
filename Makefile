@@ -74,26 +74,25 @@ create_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
-
 ## Make dataset
 .PHONY: data
 data: requirements
-	$(PYTHON_INTERPRETER) MLFlow/DVC/dataset.py
+	$(PYTHON_INTERPRETER) -m src.data.dataset
 
 ## Make clean
 .PHONY: clean_data
 clean_data:
-	$(PYTHON_INTERPRETER) MLFlow/DVC/cleaning.py
+	$(PYTHON_INTERPRETER) -m src.data.cleaning
 
 ## Make FE
 .PHONY: FE
 FE:
-	$(PYTHON_INTERPRETER) MLFlow/DVC/features.py
+	$(PYTHON_INTERPRETER) -m src.data.features
 
 ## Make train
 .PHONY: train
 train:
-	$(PYTHON_INTERPRETER) MLFlow/DVC/modeling/train.py
+	$(PYTHON_INTERPRETER) -m src.modeling.train
 
 ## Make prepare: ejecuta data → clean_data → FE
 .PHONY: prepare

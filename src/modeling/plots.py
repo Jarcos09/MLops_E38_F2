@@ -3,7 +3,7 @@ from loguru import logger
 from tqdm import tqdm
 import typer
 
-from MLFlow.DVC.config import PROJECT_PATHS
+from src.config.config import PROJECT_PATHS
 
 app = typer.Typer()
 

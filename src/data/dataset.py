@@ -2,7 +2,7 @@
 import gdown
 from loguru import logger
 import typer
-from config  import conf, PROJECT_PATHS, DOWNLOAD_PATHS
+from src.config.config import conf, PROJECT_PATHS, DOWNLOAD_PATHS
 
 app = typer.Typer()
 

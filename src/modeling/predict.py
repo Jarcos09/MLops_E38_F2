@@ -4,8 +4,7 @@ from tqdm import tqdm
 import typer
 import sys
 
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-from config import PROJECT_PATHS
+from src.config.config import PROJECT_PATHS
 
 app = typer.Typer()
 
