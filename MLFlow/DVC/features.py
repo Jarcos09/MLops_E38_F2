@@ -9,6 +9,7 @@ import yaml
 from pathlib import Path
 from loguru import logger
 import typer
+from config import conf, PROCESSED_DATA_DIR, PREPROCESSING_INPUT_FILE, PREPROCESSING_OUTPUT_XTRAIN, PREPROCESSING_OUTPUT_XTEST, PREPROCESSING_OUTPUT_YTRAIN, PREPROCESSING_OUTPUT_YTEST
 
 from sklearn.preprocessing import OneHotEncoder, PowerTransformer
 from sklearn.compose import ColumnTransformer
@@ -19,41 +20,16 @@ from sklearn.pipeline import Pipeline
 warnings.filterwarnings('ignore')
 app = typer.Typer()
 
-# Rutas institucionales
-sys.path.append(str(Path(__file__).resolve().parents[2]))
-from MLFlow.DVC.config import PROCESSED_DATA_DIR, INTERIM_DATA_DIR
-
 PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-# Cargar parámetros desde params.yaml
-def load_params(path: Path = Path(__file__).resolve().parents[2] / "params.yaml") -> dict:
-    with open(path, "r") as f:
-        return yaml.safe_load(f)
 
 @app.command()
 def main():
-    params = load_params()
-
-    # Extraer rutas y nombres de archivo
-    input_file = params["preprocessing"]["input_file"]
-    output_files = params["preprocessing"]["output_files"]
-    drop_columns = params["preprocessing"]["drop_columns"]
-    target_columns = params["preprocessing"]["target_columns"]
-    test_size = params["preprocessing"]["test_size"]
-    random_state = params["preprocessing"]["random_state"]
-
-    input_path = INTERIM_DATA_DIR / input_file
-    output_Xtrain = PROCESSED_DATA_DIR / output_files["Xtrain"]
-    output_Xtest = PROCESSED_DATA_DIR / output_files["Xtest"]
-    output_ytrain = PROCESSED_DATA_DIR / output_files["ytrain"]
-    output_ytest = PROCESSED_DATA_DIR / output_files["ytest"]
-
-    logger.info(f"Cargando dataset limpio desde: {input_path}")
-    df = pd.read_csv(input_path)
+    logger.info(f"Cargando dataset limpio desde: {PREPROCESSING_INPUT_FILE}")
+    df = pd.read_csv(PREPROCESSING_INPUT_FILE)
 
     # Separación de variables
-    X = df.drop(columns=target_columns + drop_columns)
-    y = df[target_columns].copy()
+    X = df.drop(columns=conf.preprocessing.target_columns + conf.preprocessing.drop_columns)
+    y = df[conf.preprocessing.target_columns].copy()
 
     # Conversión a categorías
     cat_features = X.columns.tolist()
@@ -61,9 +37,9 @@ def main():
 
     # Preprocesamiento con One-Hot Encoding
     encoder = OneHotEncoder(
-        drop=params["preprocessing"]["encoding"]["drop"],
-        sparse_output=params["preprocessing"]["encoding"]["sparse_output"],
-        handle_unknown=params["preprocessing"]["encoding"]["handle_unknown"]
+        drop=conf.preprocessing.encoding.drop,
+        sparse_output=conf.preprocessing.encoding.sparse_output,
+        handle_unknown=conf.preprocessing.encoding.handle_unknown
     )
 
     preprocessor = ColumnTransformer(
@@ -72,10 +48,10 @@ def main():
     )
 
     # División de datos
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=conf.preprocessing.test_size, random_state=conf.preprocessing.random_state)
 
     # Transformación Yeo-Johnson
-    yao = PowerTransformer(method=params["preprocessing"]["target_transform"])
+    yao = PowerTransformer(method=conf.preprocessing.target_transform)
     y_train = pd.DataFrame(yao.fit_transform(y_train), columns=y.columns, index=y_train.index)
     y_test = pd.DataFrame(yao.transform(y_test), columns=y.columns, index=y_test.index)
 
@@ -86,10 +62,10 @@ def main():
 
     # Guardado de datos procesados
     feature_names = pipeline.named_steps['preprocessor'].get_feature_names_out()
-    pd.DataFrame(X_train_proc, columns=feature_names, index=X_train.index).to_csv(output_Xtrain, index=False)
-    pd.DataFrame(X_test_proc, columns=feature_names, index=X_test.index).to_csv(output_Xtest, index=False)
-    y_train.to_csv(output_ytrain, index=False)
-    y_test.to_csv(output_ytest, index=False)
+    pd.DataFrame(X_train_proc, columns=feature_names, index=X_train.index).to_csv(PREPROCESSING_OUTPUT_XTRAIN, index=False)
+    pd.DataFrame(X_test_proc, columns=feature_names, index=X_test.index).to_csv(PREPROCESSING_OUTPUT_XTEST, index=False)
+    y_train.to_csv(PREPROCESSING_OUTPUT_YTRAIN, index=False)
+    y_test.to_csv(PREPROCESSING_OUTPUT_YTEST, index=False)
 
     logger.success("Preprocesamiento completado y archivos guardados.")
 

@@ -42,5 +42,7 @@ pytest==8.4.2
 fastapi==0.116.1
 
 # Mensajes de error enriquecidos
+loguru==0.7.2
 
-loguru 
+# Manejo de configuración
+omegaconf>=2.3.0

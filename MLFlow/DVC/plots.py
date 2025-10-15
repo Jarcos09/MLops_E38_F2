@@ -4,7 +4,7 @@ from loguru import logger
 from tqdm import tqdm
 import typer
 
-from MLFlow/DVC.config import FIGURES_DIR, PROCESSED_DATA_DIR
+from MLFlow.DVC.config import conf, PROCESSED_DATA_DIR, FIGURES_DIR
 
 app = typer.Typer()
 

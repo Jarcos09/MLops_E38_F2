@@ -1,32 +1,30 @@
+from omegaconf import OmegaConf
 from pathlib import Path
-
 from dotenv import load_dotenv
 from loguru import logger
 
-# Load environment variables from .env file if it exists
-load_dotenv()
+conf = OmegaConf.load("params.yaml")
+conf = OmegaConf.create(OmegaConf.to_yaml(conf, resolve=True))
 
-# Paths
-PROJ_ROOT = Path(__file__).resolve().parents[1]
-logger.info(f"PROJ_ROOT path is: {PROJ_ROOT}")
+# Constantes
+PROJ_ROOT = Path(__file__).resolve().parents[2]
 
-DATA_DIR = PROJ_ROOT / "data"
-RAW_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "raw"
-INTERIM_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "interim"
-PROCESSED_DATA_DIR = Path.home() / "MLops_E38_F2" / "data" / "processed"
-EXTERNAL_DATA_DIR = DATA_DIR / "external"
+DATA_DIR = PROJ_ROOT / conf.paths.data
+RAW_DATA_DIR = PROJ_ROOT / conf.paths.raw
+INTERIM_DATA_DIR = PROJ_ROOT/ conf.paths.interim
+PROCESSED_DATA_DIR = PROJ_ROOT / conf.paths.processed
+EXTERNAL_DATA_DIR = DATA_DIR / conf.paths.external
+MODELS_DIR = PROJ_ROOT / conf.paths.models
+REPORTS_DIR = PROJ_ROOT / conf.paths.reports
+FIGURES_DIR = REPORTS_DIR / conf.paths.figures
 
-MODELS_DIR = PROJ_ROOT / "models"
+CLEAN_INPUT_PATH = RAW_DATA_DIR / conf.cleaning.input_file
+CLEAN_OUTPUT_PATH = INTERIM_DATA_DIR / conf.cleaning.output_file
 
-REPORTS_DIR = PROJ_ROOT / "reports"
-FIGURES_DIR = REPORTS_DIR / "figures"
+DOWNLOAD_DATASET_FILE = RAW_DATA_DIR / conf.download.dataset_filename
 
-# If tqdm is installed, configure loguru with tqdm.write
-# https://github.com/Delgan/loguru/issues/135
-try:
-    from tqdm import tqdm
-
-    logger.remove(0)
-    logger.add(lambda msg: tqdm.write(msg, end=""), colorize=True)
-except ModuleNotFoundError:
-    pass
+PREPROCESSING_INPUT_FILE = INTERIM_DATA_DIR / conf.preprocessing.input_file
+PREPROCESSING_OUTPUT_XTRAIN = PROCESSED_DATA_DIR / conf.preprocessing.output_files.x_train
+PREPROCESSING_OUTPUT_XTEST = PROCESSED_DATA_DIR / conf.preprocessing.output_files.x_test
+PREPROCESSING_OUTPUT_YTRAIN = PROCESSED_DATA_DIR / conf.preprocessing.output_files.y_train
+PREPROCESSING_OUTPUT_YTEST = PROCESSED_DATA_DIR / conf.preprocessing.output_files.y_test

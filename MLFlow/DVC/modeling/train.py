@@ -15,20 +15,11 @@ import pandas as pd
 from loguru import logger
 import mlflow
 
-
-
 # Rutas de configuración institucional
-sys.path.append(str(Path(__file__).resolve().parents[3]))
-from MLFlow.DVC.config import MODELS_DIR, PROCESSED_DATA_DIR
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+from config import conf, MODELS_DIR, PREPROCESSING_OUTPUT_XTRAIN, PREPROCESSING_OUTPUT_XTEST, PREPROCESSING_OUTPUT_YTRAIN, PREPROCESSING_OUTPUT_YTEST
 
 app = typer.Typer()
-
-# Cargar parámetros desde params.yaml
-def load_params(path: Path = Path(__file__).resolve().parents[3] / "params.yaml") -> dict:
-    with open(path, "r") as ymlfile:
-        return yaml.safe_load(ymlfile)
-
-params = load_params()
 
 
 def train_and_evaluate_rf(X_train, X_test, y_train, y_test, random_state=42, param_grid=None, metrics_path="metrics.txt"):
@@ -177,11 +168,11 @@ def train_model(
 
 @app.command()
 def main(
-    Xtrain_path: Path = PROCESSED_DATA_DIR / params["preprocessing"]["output_files"]["Xtrain"],
-    Xtest_path: Path = PROCESSED_DATA_DIR / params["preprocessing"]["output_files"]["Xtest"],
-    ytrain_path: Path = PROCESSED_DATA_DIR / params["preprocessing"]["output_files"]["ytrain"],
-    ytest_path: Path = PROCESSED_DATA_DIR / params["preprocessing"]["output_files"]["ytest"],
-    model_path: Path = MODELS_DIR / params["training"]["model_filename"]
+    Xtrain_path: Path =PREPROCESSING_OUTPUT_XTRAIN,
+    Xtest_path: Path = PREPROCESSING_OUTPUT_XTEST,
+    ytrain_path: Path = PREPROCESSING_OUTPUT_YTRAIN,
+    ytest_path: Path = PREPROCESSING_OUTPUT_YTEST,
+    model_path: Path = MODELS_DIR / conf.training.model_filename
 ):
     logger.info(f"Cargando características de entrenamiento desde: {Xtrain_path}")
     logger.info(f"Cargando características de prueba desde: {Xtest_path}")
@@ -195,8 +186,8 @@ def main(
     y_test = pd.read_csv(ytest_path)
 
 
-    best_model = train_and_evaluate_rf(X_train, X_test, y_train, y_test, random_state=params["training"]["random_state"])
-    train_model(X_train, X_test, y_train, y_test, best_model, random_state=params["training"]["random_state"])
+    best_model = train_and_evaluate_rf(X_train, X_test, y_train, y_test, random_state=conf.training.random_state)
+    train_model(X_train, X_test, y_train, y_test, best_model, random_state=conf.training.random_state)
 
 
 if __name__ == "__main__":
