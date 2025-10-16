@@ -2,20 +2,22 @@
 import typer
 import sys
 from src.data.clean_dataset import DatasetCleaner
-from src.config.config import conf, PROJECT_PATHS, CLEANING_PATHS
+from src.config.config import conf
+from src.utils.paths import ensure_path
+from loguru import logger
 
 app = typer.Typer()
 
-from loguru import logger
-
 @app.command()
 def main():
-    PROJECT_PATHS.INTERIM.mkdir(parents=True, exist_ok=True)
+    ensure_path(conf.paths.interim)
+
     cleaner = DatasetCleaner(
-        input_path=CLEANING_PATHS.INPUT_FILE,
-        output_path=CLEANING_PATHS.OUTPUT_FILE,
+        input_path=conf.data.raw_data_file,
+        output_path=conf.data.interim_data_file,
         skew_threshold=conf.cleaning.skew_threshold
     )
+    
     cleaner.run()
 
 if __name__ == "__main__":

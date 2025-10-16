@@ -8,7 +8,6 @@ from sklearn.preprocessing import OneHotEncoder, PowerTransformer
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from src.config.config import conf, PROJECT_PATHS, PREPROCESSING_PATHS
 
 warnings.filterwarnings('ignore')
 

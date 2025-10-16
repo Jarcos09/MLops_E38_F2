@@ -2,16 +2,15 @@ from pathlib import Path
 from loguru import logger
 from tqdm import tqdm
 import typer
-
-from src.config.config import PROJECT_PATHS
+from src.config.config import conf
 
 app = typer.Typer()
 
 @app.command()
 def main(
     # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = PROJECT_PATHS.PROCESSED / "dataset.csv",
-    output_path: Path = PROJECT_PATHS.FIGURES / "plot.png",
+    input_path: Path = Path(conf.paths.processed) / "dataset.csv",
+    output_path: Path = Path(conf.paths.figures) / "plot.png",
     # -----------------------------------------
 ):
     # ---- REPLACE THIS WITH YOUR OWN CODE ----

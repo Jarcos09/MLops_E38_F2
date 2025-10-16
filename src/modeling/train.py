@@ -2,16 +2,16 @@
 import typer
 import pandas as pd
 from src.modeling.train_model import ModelTrainer
-from src.config.config import PREPROCESSING_PATHS, TRAINING_PATHS, conf
+from src.config.config import conf
 
 app = typer.Typer()
 
 @app.command()
 def train():
-    X_train = pd.read_csv(PREPROCESSING_PATHS.X_TRAIN)
-    X_test = pd.read_csv(PREPROCESSING_PATHS.X_TEST)
-    y_train = pd.read_csv(PREPROCESSING_PATHS.Y_TRAIN)
-    y_test = pd.read_csv(PREPROCESSING_PATHS.Y_TEST)
+    X_train = pd.read_csv(conf.data.processed_data.x_train_file)
+    X_test = pd.read_csv(conf.data.processed_data.x_test_file)
+    y_train = pd.read_csv(conf.data.processed_data.y_train_file)
+    y_test = pd.read_csv(conf.data.processed_data.y_test_file)
 
     trainer = ModelTrainer(
         X_train=X_train,

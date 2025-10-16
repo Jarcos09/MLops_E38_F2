@@ -1,35 +1,31 @@
 paths:
-  data: "data"
+  data: "./data"
   raw: "${paths.data}/raw" 
   interim: "${paths.data}/interim"
   processed: "${paths.data}/processed"
   external: "${paths.data}/external"
-  models: "models"
-  reports: "reports"
+  models: "./models"
+  reports: "./reports"
   figures: "${paths.reports}/figures"
 
-cleaning:
-  input_file: "energy_modified.csv"
-  output_file: "energy_modified_clean.csv"
-  skew_threshold: 0.5
-
 data:
-  input_file: "data/interim/energy_modified_clean.csv"
-  output_dir: "data/processed/"
-  drop_columns: ["mixed_type_col"]
-  target_columns: ["Y1", "Y2"]
+  raw_data_file: "${paths.raw}/energy_modified.csv"
+  interim_data_file: "${paths.interim}/energy_modified_clean.csv"
+  processed_data:
+    x_train_file: "${paths.processed}/Xtrain_processed.csv"
+    x_test_file: "${paths.processed}/Xtest_processed.csv"
+    y_train_file: "${paths.processed}/ytrain_processed.csv"
+    y_test_file: "${paths.processed}/ytest_processed.csv"
+  models_data:
+    model_xgb_file: "${paths.models}/model_xgb.pkl"
+
+cleaning:
+  skew_threshold: 0.5
 
 download:
   dataset_id: "1OuJHPpn2Wv5EhlL1J98HWYyPJM-iL8Ds"
-  dataset_filename: "energy_modified.csv"
 
 preprocessing:
-  input_file: "energy_modified_clean.csv"
-  output_files:
-    x_train: "Xtrain_processed.csv"
-    x_test: "Xtest_processed.csv"
-    y_train: "ytrain_processed.csv"
-    y_test: "ytest_processed.csv"
   drop_columns: ["mixed_type_col"]
   target_columns: ["Y1", "Y2"]
   test_size: 0.2
@@ -41,9 +37,7 @@ preprocessing:
     handle_unknown: "ignore"
 
 training:
-  model_filename: "model_xgb.pkl"
   random_state: 42
-  metrics_file_xgb: "metrics_xgb.txt"
   experiment_name: "xgb_multioutput"
   registry_model_name: "XGBMultiOutput"
 

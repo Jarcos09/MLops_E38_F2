@@ -4,15 +4,15 @@ from tqdm import tqdm
 import typer
 import sys
 
-from src.config.config import PROJECT_PATHS
+from src.config.config import conf
 
 app = typer.Typer()
 
 @app.command()
 def main(
-    features_path: Path = PROJECT_PATHS.PROCESSED / "test_features.csv",
-    model_path: Path = PROJECT_PATHS.MODELS / "model.pkl",
-    predictions_path: Path = PROJECT_PATHS.PROCESSED / "test_predictions.csv",
+    features_path: Path = Path(conf.paths.processed) / "test_features.csv",
+    model_path: Path = Path(conf.paths.models) / "model.pkl",
+    predictions_path: Path = Path(conf.paths.processed) / "test_predictions.csv",
 ):
     logger.info("Performing inference for model...")
     for i in tqdm(range(10), total=10):

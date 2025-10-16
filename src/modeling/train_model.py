@@ -9,7 +9,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from xgboost import XGBRegressor
 import mlflow
 import mlflow.sklearn
-from src.config.config import TRAINING_PATHS
+from src.config.config import conf
 
 class ModelTrainer:
     def __init__(self, X_train, X_test, y_train, y_test, config):
@@ -72,7 +72,7 @@ class ModelTrainer:
             # Guarda el run_id para usarlo después
             self._run_id = run.info.run_id
         
-        joblib.dump(multioutput_model, TRAINING_PATHS.MODEL_FILE)
+        joblib.dump(multioutput_model, conf.data.models_data.model_xgb_file)
 
     def log_metrics(self, y_pred):
         rmse_y1 = np.sqrt(mean_squared_error(self.y_test["Y1"], y_pred[:, 0]))

@@ -42,6 +42,9 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 │               
 └── src                             <- Source code for the project
     ├── __init__.py                 <- Makes `src` a Python module
+    ├── utils/
+    │   ├── __init__.py
+    │   └── paths.py                <- Paths manager to create and ensure directories
     ├── config
     │   ├── __init__.py
     │   └── config.py               <- Store useful variables and configuration

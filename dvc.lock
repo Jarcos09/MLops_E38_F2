@@ -5,12 +5,12 @@ stages:
     deps:
     - path: params.yaml
       hash: md5
-      md5: ae93a98c9d86b0e18042f81101af01ea
-      size: 1454
+      md5: b07b00f658a8f82467f3a351f2f2a7ea
+      size: 1355
     - path: src/data/dataset.py
       hash: md5
-      md5: ad0f61d058ddcd5af1ac08c047d75f5e
-      size: 383
+      md5: 2e62008ec476042d5cd1ef6f82dbfef9
+      size: 368
     outs:
     - path: data/raw/energy_modified.csv
       hash: md5
@@ -25,12 +25,12 @@ stages:
       size: 43747
     - path: params.yaml
       hash: md5
-      md5: ae93a98c9d86b0e18042f81101af01ea
-      size: 1454
+      md5: b07b00f658a8f82467f3a351f2f2a7ea
+      size: 1355
     - path: src/data/cleaning.py
       hash: md5
-      md5: d837cccdb4d788b7af9df9455c419ece
-      size: 529
+      md5: fb57f3b5e9a48049de4b7f0c9d9ba22a
+      size: 517
     outs:
     - path: data/interim/energy_modified_clean.csv
       hash: md5
@@ -45,12 +45,12 @@ stages:
       size: 47827
     - path: params.yaml
       hash: md5
-      md5: ae93a98c9d86b0e18042f81101af01ea
-      size: 1454
+      md5: b07b00f658a8f82467f3a351f2f2a7ea
+      size: 1355
     - path: src/data/features.py
       hash: md5
-      md5: 65745d9ca855915253ae121d08a48217
-      size: 1238
+      md5: 466ca706de82e0699fb943e700652716
+      size: 1254
     outs:
     - path: data/processed/
       hash: md5
@@ -67,12 +67,12 @@ stages:
       nfiles: 4
     - path: params.yaml
       hash: md5
-      md5: ae93a98c9d86b0e18042f81101af01ea
-      size: 1454
+      md5: b07b00f658a8f82467f3a351f2f2a7ea
+      size: 1355
     - path: src/modeling/train.py
       hash: md5
-      md5: bdfb7be0c42319696796d8efa8f86fd6
-      size: 880
+      md5: c760bb10c276afbb7b7c88b253892f96
+      size: 883
     outs:
     - path: models/model_xgb.pkl
       hash: md5

@@ -4,13 +4,7 @@ import pandas as pd
 from pathlib import Path
 from scipy.stats import skew
 from loguru import logger
-
-import sys
 from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parents[1]))
-
-
-from src.config.config import conf, PROJECT_PATHS, CLEANING_PATHS
 
 class DatasetCleaner:
     def __init__(self, input_path: Path, output_path: Path, skew_threshold: float):
