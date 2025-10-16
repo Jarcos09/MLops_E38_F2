@@ -9,55 +9,56 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── params.yaml        <- Centralized configuration file for pipeline parameters.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         MLFlow/DVC and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── src   <- Source code for use in this project.
-    │
-    ├── __init__.py            <- Makes r a Python module
-    │
-    ├── config                
-    │   ├── __init__.py 
-    │   └── config.py          <- Store useful variables and configuration
-    │
-    ├── data                
-    │   ├── __init__.py 
-    │   ├── dataset.py         <- Scripts to download or generate data
-    │   └── features.py        <- Code to create features for modeling
-    │
-    └── modeling                
-        ├── __init__.py 
-        ├── predict.py         <- Code to run model inference with trained models          
-        ├── train.py           <- Code to train models
-        └── plots.py           <- Code to create visualizations
+├── LICENSE                         <- Open-source license if one is chosen
+├── Makefile                        <- Makefile with convenience commands like `make data` or `make train`
+├── README.md                       <- The top-level README for developers using this project.
+├── params.yaml                     <- Centralized configuration file for pipeline parameters.
+├── data                
+│   ├── external                    <- Data from third party sources.
+│   ├── interim                     <- Intermediate data that has been transformed.
+│   ├── processed                   <- The final, canonical data sets for modeling.
+│   └── raw                         <- The original, immutable data dump.
+│               
+├── docs                            <- A default mkdocs project; see www.mkdocs.org for details
+│               
+├── models                          <- Trained and serialized models, model predictions, or model summaries
+│               
+├── notebooks                       <- Jupyter notebooks. Naming convention is a number (for ordering),
+│                                      the creator's initials, and a short `-` delimited description, e.g.
+│                                      `1.0-jqp-initial-data-exploration`.
+│               
+├── pyproject.toml                  <- Project configuration file with package metadata for 
+│                                      MLFlow/DVC and configuration for tools like black
+│               
+├── references                      <- Data dictionaries, manuals, and all other explanatory materials.
+│               
+├── reports                         <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures                     <- Generated graphics and figures to be used in reporting
+│               
+├── requirements.txt                <- The requirements file for reproducing the analysis environment, e.g.
+│                                      generated with `pip freeze > requirements.txt`
+│               
+├── setup.cfg                       <- Configuration file for flake8
+│               
+└── src                             <- Source code for the project
+    ├── __init__.py                 <- Makes `src` a Python module
+    ├── config
+    │   ├── __init__.py
+    │   └── config.py               <- Store useful variables and configuration
+    ├── data
+    │   ├── __init__.py
+    │   ├── clean_dataset.py        <- Script to clean raw data
+    │   ├── cleaning.py             <- Main cleaning scripts
+    │   ├── dataset.py              <- Scripts to download or generate data
+    │   ├── download_dataset.py     <- Scripts to fetch datasets from external sources
+    │   ├── features.py             <- Code to create features for modeling
+    │   └── preprocess_data.py      <- Preprocessing pipelines for ML
+    └── modeling
+        ├── __init__.py
+        ├── plots.py                <- Code to create visualizations
+        ├── predict.py              <- Code to run model inference with trained models
+        ├── train_model.py          <- Model training logic and MLFlow integration
+        └── train.py                <- Entry point to train models
 ```
 
 --------
@@ -155,21 +156,26 @@ make dvc_status
 
 ### Inicialización de Repositorio DVC
 ```bash
+dvc init
+```
+
+### Agregar Repositorio DVC (GDrive)
+```bash
 dvc remote add -d data gdrive://1VnjNYOpP2uSaaUtFdRzW45iwZJUbt-5v
 ```
 
-### Configuración de DVC (Cliente OAuth de GDrive)
+### Configuración de DVC (GDrive)
 ```bash
 dvc remote modify data gdrive_client_id '426582966437-3ni4029llgejof826h2pktmkk4elcm6j.apps.googleusercontent.com'
 dvc remote modify data gdrive_client_secret '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'
 ```
 
-### Verificar la lista de remotes configurados
+### Verificar Repositorios DVC Configurados
 ```bash
 dvc remote list
 ```
 
-### Repositorio GDrive del proyecto
+### Repositorio DVC (GDrive)
 [Carpeta Principal del Proyecto en Google Drive](https://drive.google.com/drive/u/2/folders/1VnjNYOpP2uSaaUtFdRzW45iwZJUbt-5v)
 
 --------
