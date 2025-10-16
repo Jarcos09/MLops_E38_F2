@@ -1,0 +1,35 @@
+stages:
+  download:
+    cmd: python -m src.data.dataset
+    deps:
+      - src/data/dataset.py
+      - params.yaml
+    outs:
+      - data/raw/energy_modified.csv
+
+  cleaning:
+    cmd: python -m src.data.cleaning
+    deps:
+      - src/data/cleaning.py
+      - data/raw/energy_modified.csv
+      - params.yaml
+    outs:
+      - data/interim/energy_modified_clean.csv
+
+  features:
+    cmd: python -m src.data.features
+    deps:
+      - src/data/features.py
+      - data/interim/energy_modified_clean.csv
+      - params.yaml
+    outs:
+      - data/processed/
+
+  train:
+    cmd: python -m src.modeling.train
+    deps:
+      - src/modeling/train.py
+      - data/processed/
+      - params.yaml
+    outs:
+      - models/model_xgb.pkl

@@ -21,7 +21,7 @@ def train():
         config={
             "random_state": conf.training.random_state,
             "experiment_name": conf.training.experiment_name,
-            "registry_model_name": "XGBMultiOutput"
+            "registry_model_name": conf.training.registry_model_name
         }
     )
     trainer.train_random_forest()

@@ -10,15 +10,11 @@ PYTHON_INTERPRETER = python
 # COMMANDS                                                                      #
 #################################################################################
 
-
 ## Install Python dependencies
 .PHONY: requirements
 requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --quiet
-	
-
-
 
 ## Delete all compiled Python files
 .PHONY: clean
@@ -39,8 +35,6 @@ format:
 	ruff check --fix
 	ruff format
 
-
-
 ## Run tests
 .PHONY: test
 test:
@@ -55,9 +49,6 @@ sync_data_down:
 .PHONY: sync_data_up
 sync_data_up:
 	gsutil -m rsync -r data/ gs://DVC/data/
-	
-
-
 
 ## Set up Python interpreter environment
 .PHONY: create_environment
@@ -67,9 +58,6 @@ create_environment:
 	
 	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
 	
-
-
-
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
@@ -115,3 +103,27 @@ export PRINT_HELP_PYSCRIPT
 
 help:
 	@$(PYTHON_INTERPRETER) -c "${PRINT_HELP_PYSCRIPT}" < $(MAKEFILE_LIST)
+
+#################################################################################
+# DVC COMMANDS                                                                  #
+#################################################################################
+
+## Reproduce todo el pipeline según dvc.yaml
+.PHONY: dvc_repro
+dvc_repro:
+	dvc repro
+
+## Sube los datos versionados al remoto (GDrive/S3)
+.PHONY: dvc_push
+dvc_push:
+	dvc push
+
+## Descarga los datos versionados del remoto
+.PHONY: dvc_pull
+dvc_pull:
+	dvc pull
+
+## Verifica qué etapas están desactualizadas
+.PHONY: dvc_status
+dvc_status:
+	dvc status

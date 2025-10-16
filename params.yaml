@@ -4,9 +4,9 @@ paths:
   interim: "${paths.data}/interim"
   processed: "${paths.data}/processed"
   external: "${paths.data}/external"
-  models: "${paths.data}/models"
-  reports: "${paths.data}/reports"
-  figures: "${paths.data}/figures"
+  models: "models"
+  reports: "reports"
+  figures: "${paths.reports}/figures"
 
 cleaning:
   input_file: "energy_modified.csv"
@@ -45,6 +45,7 @@ training:
   random_state: 42
   metrics_file_xgb: "metrics_xgb.txt"
   experiment_name: "xgb_multioutput"
+  registry_model_name: "XGBMultiOutput"
 
 transform:
   target_method: "yeo-johnson"

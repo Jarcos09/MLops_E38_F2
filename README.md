@@ -40,22 +40,24 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 │
 ├── setup.cfg          <- Configuration file for flake8
 │
-└── MLFlow/DVC   <- Source code for use in this project.
+└── src   <- Source code for use in this project.
     │
-    ├── __init__.py             <- Makes MLFlow/DVC a Python module
+    ├── __init__.py            <- Makes r a Python module
     │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
+    ├── config                
     │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
+    │   └── config.py          <- Store useful variables and configuration
     │
-    └── plots.py                <- Code to create visualizations
+    ├── data                
+    │   ├── __init__.py 
+    │   ├── dataset.py         <- Scripts to download or generate data
+    │   └── features.py        <- Code to create features for modeling
+    │
+    └── modeling                
+        ├── __init__.py 
+        ├── predict.py         <- Code to run model inference with trained models          
+        ├── train.py           <- Code to train models
+        └── plots.py           <- Code to create visualizations
 ```
 
 --------
@@ -106,21 +108,68 @@ Descargar Dataset:
 ```bash
 make data
 ```
+
 Realizar limpieza del Dataset:
 ```bash
 make clean_data
 ```
+
 Realizar FE:
 ```bash
 make FE
 ```
-Ejecuta data → clean_data → FE
+
+Ejecuta (data → clean_data → FE):
 ```bash
 make prepare
 ```
-Realizar entrenamiento
+
+Realizar entrenamiento:
 ```bash
 make train
 ```
+
+Ejecutar el pipeline completo de DVC (data → clean → FE → train):
+```bash
+make dvc_repro
+```
+
+Subir los outputs del pipeline al remoto
+```bash
+make dvc_push
+```
+
+Descargar los datos versionados del remoto:
+```bash
+make dvc_pull
+```
+
+Verificar qué etapas del pipeline están desactualizadas:
+```bash
+make dvc_status
+```
+
+--------
+
+## DVC
+
+### Inicialización de Repositorio DVC
+```bash
+dvc remote add -d data gdrive://1VnjNYOpP2uSaaUtFdRzW45iwZJUbt-5v
+```
+
+### Configuración de DVC (Cliente OAuth de GDrive)
+```bash
+dvc remote modify data gdrive_client_id '426582966437-3ni4029llgejof826h2pktmkk4elcm6j.apps.googleusercontent.com'
+dvc remote modify data gdrive_client_secret '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'
+```
+
+### Verificar la lista de remotes configurados
+```bash
+dvc remote list
+```
+
+### Repositorio GDrive del proyecto
+[Carpeta Principal del Proyecto en Google Drive](https://drive.google.com/drive/u/2/folders/1VnjNYOpP2uSaaUtFdRzW45iwZJUbt-5v)
 
 --------
