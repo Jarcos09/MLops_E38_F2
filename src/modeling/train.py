@@ -21,11 +21,11 @@ def train():
         config={
             "random_state": conf.training.random_state,
             "experiment_name": conf.training.experiment_name,
-            "registry_model_name": "XGBMultiOutputJuan"
+            "registry_model_name": "XGBMultiOutput"
         }
     )
     trainer.train_random_forest()
-    trainer.train_xgboost_with_mlflow()
+    trainer.train_xgboost()
 
 if __name__ == "__main__":
     app()

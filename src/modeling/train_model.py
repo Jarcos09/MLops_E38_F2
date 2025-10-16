@@ -46,7 +46,7 @@ class ModelTrainer:
         logger.success("Random Forest entrenado con éxito.")
         return self.best_rf_model
 
-    def train_xgboost_with_mlflow(self):
+    def train_xgboost(self):
         rf_params = self.best_rf_model.estimator.get_params()
         logger.info("Inicializando modelo XGBoost Multi-Output con hiperparámetros heredados de Random Forest")
 
@@ -69,6 +69,9 @@ class ModelTrainer:
             y_pred = multioutput_model.predict(self.X_test)
             self.log_metrics(y_pred)
             self.log_model(multioutput_model, run.info.run_id)
+
+            # Guarda el run_id para usarlo después
+            self._run_id = run.info.run_id
 
     def log_metrics(self, y_pred):
         rmse_y1 = np.sqrt(mean_squared_error(self.y_test["Y1"], y_pred[:, 0]))
