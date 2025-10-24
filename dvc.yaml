@@ -32,4 +32,5 @@ stages:
       - data/processed/
       - params.yaml
     outs:
-      - models/model_xgb.pkl
+      - models/rf_regressor.pkl
+      - models/xgb_multioutput.pkl
