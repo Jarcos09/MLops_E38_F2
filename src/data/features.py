@@ -1,13 +1,13 @@
 import typer
 from src.data.preprocess_data import DataPreprocessor
 from src.config.config import conf
-from src.utils.paths import ensure_path
+from src.utils import paths
 
 app = typer.Typer()
 
 @app.command()
 def preprocess():
-    ensure_path(conf.paths.processed)
+    paths.ensure_path(conf.paths.processed)
 
     preprocessor = DataPreprocessor(
         input_path=conf.data.interim_data_file,

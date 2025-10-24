@@ -42,7 +42,7 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 │               
 └── src                             <- Source code for the project
     ├── __init__.py                 <- Makes `src` a Python module
-    ├── utils/
+    ├── utils
     │   ├── __init__.py
     │   └── paths.py                <- Paths manager to create and ensure directories
     ├── config
@@ -126,6 +126,11 @@ make FE
 Ejecuta (data → clean_data → FE):
 ```bash
 make prepare
+```
+
+Ejecutar localmente servidor de MLFlow:
+```bash
+make mlflow-server
 ```
 
 Realizar entrenamiento:

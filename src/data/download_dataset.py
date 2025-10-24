@@ -1,7 +1,7 @@
 # src/data/download_dataset.py
 import gdown
 from loguru import logger
-from src.utils.paths import ensure_path
+from src.utils import paths
 
 class DatasetDownloader:
     def __init__(self, dataset_id: str, output_path: str):
@@ -10,7 +10,7 @@ class DatasetDownloader:
 
     def prepare_directory(self):
         logger.debug(f"Creando directorio: {self.output_path}")
-        ensure_path(self.output_path)
+        paths.ensure_path(self.output_path)
 
     def download(self):
         logger.info(f"Descargando dataset desde Google Drive (ID: {self.dataset_id})...")

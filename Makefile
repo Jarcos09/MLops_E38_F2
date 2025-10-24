@@ -57,6 +57,19 @@ create_environment:
 	conda create --name $(PROJECT_NAME) python=$(PYTHON_VERSION) -y
 	
 	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
+
+#################################################################################
+# MLflow Server                                                                 #
+#################################################################################
+
+## Levanta MLflow Server local en http://localhost:5000
+.PHONY: mlflow-server
+mlflow-server:
+	mlflow server \
+		--backend-store-uri sqlite:///mlflow.db \
+		--default-artifact-root ./mlruns \
+		--host 0.0.0.0 \
+		--port 5000
 	
 #################################################################################
 # PROJECT RULES                                                                 #

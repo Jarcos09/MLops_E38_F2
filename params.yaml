@@ -16,8 +16,6 @@ data:
     x_test_file: "${paths.processed}/Xtest_processed.csv"
     y_train_file: "${paths.processed}/ytrain_processed.csv"
     y_test_file: "${paths.processed}/ytest_processed.csv"
-  models_data:
-    model_xgb_file: "${paths.models}/model_xgb.pkl"
 
 cleaning:
   skew_threshold: 0.5
@@ -37,9 +35,14 @@ preprocessing:
     handle_unknown: "ignore"
 
 training:
+  mlflow_tracking_uri: "${oc.env:MLFLOW_TRACKING_URI}"
   random_state: 42
-  experiment_name: "xgb_multioutput"
-  registry_model_name: "XGBMultiOutput"
+  rf_experiment_name: "rf_regressor"
+  rf_registry_model_name: "RFRegressor"
+  rf_model_file: "${paths.models}/${training.rf_experiment_name}.pkl"
+  xgb_experiment_name: "xgb_multioutput"
+  xgb_registry_model_name: "XGBMultiOutput"
+  xgb_model_file: "${paths.models}/${training.xgb_experiment_name}.pkl"
 
 transform:
   target_method: "yeo-johnson"
