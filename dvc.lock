@@ -5,8 +5,8 @@ stages:
     deps:
     - path: params.yaml
       hash: md5
-      md5: b07b00f658a8f82467f3a351f2f2a7ea
-      size: 1355
+      md5: 60b8cb1c34e7005a6b389b23151a4c3a
+      size: 1699
     - path: src/data/dataset.py
       hash: md5
       md5: 2e62008ec476042d5cd1ef6f82dbfef9
@@ -25,12 +25,12 @@ stages:
       size: 43747
     - path: params.yaml
       hash: md5
-      md5: b07b00f658a8f82467f3a351f2f2a7ea
-      size: 1355
+      md5: 60b8cb1c34e7005a6b389b23151a4c3a
+      size: 1699
     - path: src/data/cleaning.py
       hash: md5
-      md5: fb57f3b5e9a48049de4b7f0c9d9ba22a
-      size: 517
+      md5: 2aa4c3bd8988da18b98403351e4579c2
+      size: 511
     outs:
     - path: data/interim/energy_modified_clean.csv
       hash: md5
@@ -45,12 +45,12 @@ stages:
       size: 47827
     - path: params.yaml
       hash: md5
-      md5: b07b00f658a8f82467f3a351f2f2a7ea
-      size: 1355
+      md5: 60b8cb1c34e7005a6b389b23151a4c3a
+      size: 1699
     - path: src/data/features.py
       hash: md5
-      md5: 466ca706de82e0699fb943e700652716
-      size: 1254
+      md5: c745880bf3af0a24b1806243cb3aff61
+      size: 1248
     outs:
     - path: data/processed/
       hash: md5
@@ -67,14 +67,47 @@ stages:
       nfiles: 4
     - path: params.yaml
       hash: md5
-      md5: b07b00f658a8f82467f3a351f2f2a7ea
-      size: 1355
+      md5: 60b8cb1c34e7005a6b389b23151a4c3a
+      size: 1699
     - path: src/modeling/train.py
       hash: md5
-      md5: c760bb10c276afbb7b7c88b253892f96
-      size: 883
+      md5: 989f55cc5bee198b5a411b99c41b54a0
+      size: 1301
     outs:
-    - path: models/model_xgb.pkl
+    - path: models/rf_regressor.pkl
       hash: md5
-      md5: d4493aa78c1deab4915d0f75a7681852
-      size: 1898767
+      md5: 42e3c615b4f67f329c052c194add392b
+      size: 2267199
+    - path: models/xgb_multioutput.pkl
+      hash: md5
+      md5: 2e7f120a797fe0b6a6b749c07397e89a
+      size: 566399
+  predict:
+    cmd: python -m src.modeling.predict
+    deps:
+    - path: data/processed/
+      hash: md5
+      md5: 1d9e531fe28851b2a36aa33afdf99e9e.dir
+      size: 327420
+      nfiles: 4
+    - path: models/rf_regressor.pkl
+      hash: md5
+      md5: 42e3c615b4f67f329c052c194add392b
+      size: 2267199
+    - path: models/xgb_multioutput.pkl
+      hash: md5
+      md5: 2e7f120a797fe0b6a6b749c07397e89a
+      size: 566399
+    - path: params.yaml
+      hash: md5
+      md5: 60b8cb1c34e7005a6b389b23151a4c3a
+      size: 1699
+    - path: src/modeling/predict.py
+      hash: md5
+      md5: adc76cfd1586247df19b7423e95a8780
+      size: 987
+    outs:
+    - path: data/prediction/predictions.csv
+      hash: md5
+      md5: 413bc38e66b3476d2b80bbbc88f37518
+      size: 6138

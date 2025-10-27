@@ -4,6 +4,7 @@ paths:
   interim: "${paths.data}/interim"
   processed: "${paths.data}/processed"
   external: "${paths.data}/external"
+  prediction: "${paths.data}/prediction"
   models: "./models"
   reports: "./reports"
   figures: "${paths.reports}/figures"
@@ -16,6 +17,7 @@ data:
     x_test_file: "${paths.processed}/Xtest_processed.csv"
     y_train_file: "${paths.processed}/ytrain_processed.csv"
     y_test_file: "${paths.processed}/ytest_processed.csv"
+  prediction_file: "${paths.prediction}/predictions.csv"
 
 cleaning:
   skew_threshold: 0.5
@@ -43,6 +45,9 @@ training:
   xgb_experiment_name: "xgb_multioutput"
   xgb_registry_model_name: "XGBMultiOutput"
   xgb_model_file: "${paths.models}/${training.xgb_experiment_name}.pkl"
+
+prediction:
+  use_model: "rf"
 
 transform:
   target_method: "yeo-johnson"

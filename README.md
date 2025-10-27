@@ -138,12 +138,17 @@ Realizar entrenamiento:
 make train
 ```
 
+Realizar preducción
+```bash
+make predict
+```
+
 Ejecutar el pipeline completo de DVC (data → clean → FE → train):
 ```bash
 make dvc_repro
 ```
 
-Subir los outputs del pipeline al remoto
+Subir los outputs del pipeline al remoto:
 ```bash
 make dvc_push
 ```
@@ -160,7 +165,37 @@ make dvc_status
 
 --------
 
-## DVC
+## 🧠 MLflow
+
+**MLflow** es una herramienta para gestionar el ciclo de vida de modelos de Machine Learning: rastrea experimentos, guarda métricas y versiona modelos.
+
+---
+
+### Iniciar servidor local
+
+Ejecuta el servidor en modo local con SQLite y carpeta `mlruns`:
+
+```bash
+mlflow server \
+    --backend-store-uri sqlite:///mlflow.db \
+    --default-artifact-root ./mlruns \
+    --host 0.0.0.0 \
+    --port 5000
+````
+
+### Interfaz
+http://localhost:5000
+
+### Integración en el Proyecto
+* `train_model.py`: Registra métricas, parámetros y modelos (Random Forest, XGBoost).
+
+* `predict_model.py`: Usa modelos registrados para generar predicciones.
+
+* `config/config.py`: Define la URI de tracking (mlflow_tracking_uri).
+
+--------
+
+## 💾 DVC
 
 ### Inicialización de Repositorio DVC
 ```bash

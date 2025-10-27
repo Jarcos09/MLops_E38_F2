@@ -7,7 +7,6 @@ from sklearn.multioutput import MultiOutputRegressor, MultiOutputRegressor
 from sklearn.model_selection import ParameterGrid
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
-from src.utils import paths
 
 class ModelTrainer:
     def __init__(self, X_train, X_test, y_train, y_test, config):
@@ -17,6 +16,7 @@ class ModelTrainer:
         self.y_test = y_test
         self.config = config
         self.input_example = self.X_train.iloc[:2]
+        mlflow.set_tracking_uri(self.config.get("mlflow_tracking_uri", ""))
 
     def train_random_forest(self):
         """
@@ -34,7 +34,6 @@ class ModelTrainer:
         })
         best_metric_name = self.config.get("best_metric", "rmse").lower()
 
-        mlflow.set_tracking_uri(self.config.get("mlflow_tracking_uri", ""))
         mlflow.set_experiment(self.config["rf_experiment_name"])
 
         with mlflow.start_run(run_name="RandomForest_Tuning") as parent_run:
@@ -125,7 +124,6 @@ class ModelTrainer:
         })
         best_metric_name = self.config.get("best_metric", "rmse").lower()
 
-        mlflow.set_tracking_uri(self.config.get("mlflow_tracking_uri", ""))
         mlflow.set_experiment(self.config["xgb_experiment_name"])
 
         with mlflow.start_run(run_name="XGBoost_Tuning") as parent_run:

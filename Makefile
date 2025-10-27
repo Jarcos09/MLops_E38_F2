@@ -99,6 +99,11 @@ train:
 .PHONY: prepare
 prepare: data clean_data FE
 
+## Make predict
+.PHONY: predict
+predict:
+	$(PYTHON_INTERPRETER) -m src.modeling.predict
+
 #################################################################################
 # Self Documenting Commands                                                     #
 #################################################################################

@@ -1,1 +1,3 @@
 /model_xgb.pkl
+/rf_regressor.pkl
+/xgb_multioutput.pkl
