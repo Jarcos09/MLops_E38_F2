@@ -83,7 +83,7 @@ En esta actividad se continuará con el desarrollo del proyecto, dando seguimien
 
 --------
 
-## Roles del Equipo
+## 👥 Roles del Equipo
 | Integrante | Matrícula | Rol |
 |---|---|---|
 | Jaime Alejandro Mendívil Altamirano| `A01253316` | SRE / DevOps |
@@ -94,11 +94,11 @@ En esta actividad se continuará con el desarrollo del proyecto, dando seguimien
 
 --------
 
-## Instalar paqueterías
+## 📦 Instalar paqueterías
 ```bash
 pip install -r requirements.txt --quiet
 ```
-## Clonar repositorio
+## 💼 Clonar repositorio
 ```bash
 git clone https://github.com/Jarcos09/MLops_E38_F2.git
 cd MLops_E38_F2/
@@ -106,7 +106,7 @@ cd MLops_E38_F2/
 
 --------
 
-## Makefile
+## 📚 Makefile
 
 Descargar Dataset:
 ```bash
