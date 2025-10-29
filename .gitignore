@@ -193,4 +193,5 @@ cython_debug/
 .pypirc
 
 # DataBase files
+*.db
 *.dbmodels/*.pkl

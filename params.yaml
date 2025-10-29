@@ -19,6 +19,11 @@ data:
     y_test_file: "${paths.processed}/ytest_processed.csv"
   prediction_file: "${paths.prediction}/predictions.csv"
 
+dvc:
+  remote_url: "${oc.env:GDRIVE_REMOTE_URL}"
+  client_id: "${oc.env:GDRIVE_CLIENT_ID}"
+  client_secret: "${oc.env:GDRIVE_CLIENT_SECRET}"
+
 cleaning:
   skew_threshold: 0.5
 

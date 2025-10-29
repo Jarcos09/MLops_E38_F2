@@ -126,6 +126,11 @@ help:
 # DVC COMMANDS                                                                  #
 #################################################################################
 
+## Configura DVC con remoto y credenciales
+.PHONY: dvc_setup
+dvc_setup:
+	python -m src.config.config
+
 ## Reproduce todo el pipeline según dvc.yaml
 .PHONY: dvc_repro
 dvc_repro:

@@ -1,10 +1,8 @@
 # cleaning.py
 import typer
-import sys
 from src.data.clean_dataset import DatasetCleaner
 from src.config.config import conf
 from src.utils import paths
-from loguru import logger
 
 app = typer.Typer()
 

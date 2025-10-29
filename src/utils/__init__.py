@@ -1,1 +1,1 @@
-from . import paths
+from . import paths, cmd

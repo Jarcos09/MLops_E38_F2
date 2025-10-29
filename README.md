@@ -44,6 +44,7 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
     ├── __init__.py                 <- Makes `src` a Python module
     ├── utils
     │   ├── __init__.py
+    │   ├── cmd.py                  <- Functions to execute cmd commands
     │   └── paths.py                <- Paths manager to create and ensure directories
     ├── config
     │   ├── __init__.py
@@ -138,9 +139,14 @@ Realizar entrenamiento:
 make train
 ```
 
-Realizar preducción
+Realizar preducción:
 ```bash
 make predict
+```
+
+Configuración completa de DVC remoto:
+```bash
+make dvc_setup
 ```
 
 Ejecutar el pipeline completo de DVC (data → clean → FE → train):
@@ -173,8 +179,12 @@ make dvc_status
 
 ### Iniciar servidor local
 
-Ejecuta el servidor en modo local con SQLite y carpeta `mlruns`:
+Se puede utilizar el comando:
+```bash
+make dvc_setup
+```
 
+También se puede ejecutar el servidor en modo local con SQLite y carpeta `mlruns`:
 ```bash
 mlflow server \
     --backend-store-uri sqlite:///mlflow.db \
@@ -198,19 +208,26 @@ http://localhost:5000
 ## 💾 DVC
 
 ### Inicialización de Repositorio DVC
+
+Se puede utilizar el comando:
+```bash
+make mlflow-server
+```
+
+También, se puede inicializar manualmente de la siguiente manera:
 ```bash
 dvc init
 ```
 
 ### Agregar Repositorio DVC (GDrive)
 ```bash
-dvc remote add -d data gdrive://1VnjNYOpP2uSaaUtFdRzW45iwZJUbt-5v
+dvc remote add -d data "$GDRIVE_REMOTE_URL"
 ```
 
 ### Configuración de DVC (GDrive)
 ```bash
-dvc remote modify data gdrive_client_id '426582966437-3ni4029llgejof826h2pktmkk4elcm6j.apps.googleusercontent.com'
-dvc remote modify data gdrive_client_secret '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'
+dvc remote modify data gdrive_client_id "$GDRIVE_CLIENT_ID"
+dvc remote modify data gdrive_client_secret "$GDRIVE_CLIENT_SECRET"
 ```
 
 ### Verificar Repositorios DVC Configurados
