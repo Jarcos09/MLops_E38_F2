@@ -6,6 +6,12 @@ from scipy.stats import skew
 from loguru import logger
 from pathlib import Path
 
+## Definimos la CLASE DatasetCleaner
+## input_path: ruta del archivo CSV de entrada.
+## output_path: ruta donde se guardará el CSV limpio.
+## skew_threshold: define un umbral para decidir si se usa la media o la mediana al imputar datos faltantes.
+## self.df: contendrá el DataFrame cargado
+
 class DatasetCleaner:
     def __init__(self, input_path: Path, output_path: Path, skew_threshold: float):
         self.input_path = input_path
