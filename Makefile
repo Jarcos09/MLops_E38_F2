@@ -151,6 +151,13 @@ dvc_repro:
 	dvc repro
 
 ## Sube los datos versionados al remoto (GDrive/S3)
+## El comando dvc push utiliza los archivos de configuración dvc.yaml y dvc.lock, además del 
+## archivo de configuración global de DVC (.dvc/config), para determinar qué y a dónde subir los
+## datos. 
+## dvc.yaml le dice a DVC cómo construir el pipeline.
+## dvc.lock le dice a DVC qué partes del pipeline ya están actualizadas y coinciden con una 
+## versión anterior. 
+
 .PHONY: dvc_push
 dvc_push:
 	dvc push
