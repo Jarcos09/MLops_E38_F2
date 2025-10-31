@@ -37,17 +37,17 @@ def dvc_gdrive_setup():
     logger.success("Configuración de DVC completada con éxito.")
 
 def dvc_aws_setup():
-    """Inicializa y configura DVC automáticamente usando conf.dvc"""
+    """Inicializa y configura AWS automáticamente usando conf.dvc"""
     remote_url = conf.dvc.aws_remote_url
     aws_region = conf.dvc.aws_region
     aws_profile = conf.dvc.aws_profile
 
     if not all([remote_url, aws_region, aws_profile]):
-        logger.error("Faltan variables en params.yaml o .env para DVC.")
+        logger.error("Faltan variables en params.yaml o .env para AWS.")
         logger.info(f"remote_url={remote_url}, aws_region={aws_region}, aws_profile={bool(aws_profile)}")
         sys.exit(1)
 
-    logger.info("Inicializando configuración de DVC...")
+    logger.info("Inicializando configuración de AWS...")
 
     # Inicializa DVC
     cmd.run_cmd(["dvc", "init", "-f"])
@@ -66,7 +66,7 @@ def dvc_aws_setup():
 
     # Verifica configuración final
     cmd.run_cmd(["dvc", "remote", "list"])
-    logger.success("Configuración de DVC completada con éxito.")
+    logger.success("Configuración de AWS completada con éxito.")
 
 if __name__ == "__main__":
     option = sys.argv[1].lower()
