@@ -48,6 +48,7 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
     │   └── paths.py                <- Paths manager to create and ensure directories
     ├── config
     │   ├── __init__.py
+    │   ├── dvc_setup.py            <- Functions to set dvc repos
     │   └── config.py               <- Store useful variables and configuration
     ├── data
     │   ├── __init__.py
@@ -218,16 +219,28 @@ También, se puede inicializar manualmente de la siguiente manera:
 ```bash
 dvc init
 ```
-
-### Agregar Repositorio DVC (GDrive)
+### GDRIVE
+#### Agregar Repositorio DVC (GDrive)
 ```bash
 dvc remote add -d data "$GDRIVE_REMOTE_URL"
 ```
 
-### Configuración de DVC (GDrive)
+#### Configuración de DVC (GDrive)
 ```bash
 dvc remote modify data gdrive_client_id "$GDRIVE_CLIENT_ID"
 dvc remote modify data gdrive_client_secret "$GDRIVE_CLIENT_SECRET"
+```
+
+### AWS
+#### Agregar Repositorio DVC (AWS)
+```bash
+dvc remote add -d data "$AWS_REMOTE_URL"
+```
+
+#### Configuración de DVC (AWS)
+```bash
+dvc remote modify team_remote region "$AWS_REGION"
+dvc remote modify team_remote profile "$AWS_PROFILE"
 ```
 
 ### Verificar Repositorios DVC Configurados
