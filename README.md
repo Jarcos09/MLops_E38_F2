@@ -251,4 +251,10 @@ dvc remote list
 ### Repositorio DVC (GDrive)
 [Carpeta Principal del Proyecto en Google Drive](https://drive.google.com/drive/u/2/folders/1VnjNYOpP2uSaaUtFdRzW45iwZJUbt-5v)
 
+### Repositorio DVC (AWS)
+Lista todos los objetos dentro de todos los subdirectorios:
+```bash
+aws s3 ls s3://itesm-mna/202502-equipo38 --recursive --profile equipo38 | head
+```
+
 --------
