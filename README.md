@@ -145,9 +145,14 @@ Realizar preducción:
 make predict
 ```
 
-Configuración completa de DVC remoto:
+Configuración completa de DVC GDRIVE remoto:
 ```bash
-make dvc_setup
+make dvc_gdrive_setup
+```
+
+Configuración completa de DVC AWS remoto:
+```bash
+make dvc_aws_setup
 ```
 
 Ejecutar el pipeline completo de DVC (data → clean → FE → train):
