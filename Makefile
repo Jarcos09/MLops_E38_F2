@@ -141,6 +141,11 @@ dvc_aws_setup:
 	python -m src.config.dvc_setup aws
 
 ## Reproduce todo el pipeline según dvc.yaml
+## dvc_repro ejecuta la instrucción dvc repro, la cual es una instrucción directa de dvc, la cual esta
+## asociada al contenido del archivo dvc.yaml. Considerar que la ejecución del pipeline dvc.yaml,
+## hace las consideraciones de solo ejecutar lo que sea necesario, esto es una funcionalidad de la
+## aplicación dvc.
+
 .PHONY: dvc_repro
 dvc_repro:
 	dvc repro
