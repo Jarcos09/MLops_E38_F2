@@ -127,10 +127,15 @@ help:
 #################################################################################
 
 ## Configura DVC con remoto y credenciales
+## Servicio de Google Drive
+## Invoca a la aplicación dvc_setup con el parámetro gdrive para que configure al DVC
 .PHONY: dvc_gdrive_setup
 dvc_gdrive_setup:
 	python -m src.config.dvc_setup gdrive
 
+## Configura AWS con remoto y credenciales
+## Servicio de S3 en AWS
+## Invoca a la aplicación dvc_setup con el parámetro aws para que configure al AWS
 .PHONY: dvc_aws_setup
 dvc_aws_setup:
 	python -m src.config.dvc_setup aws
