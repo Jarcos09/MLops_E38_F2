@@ -155,7 +155,7 @@ Configuración completa de DVC AWS remoto:
 make dvc_aws_setup
 ```
 
-Ejecutar el pipeline completo de DVC (data → clean → FE → train):
+Ejecutar el pipeline completo de DVC (data → clean → FE → train → predict):
 ```bash
 make dvc_repro
 ```
