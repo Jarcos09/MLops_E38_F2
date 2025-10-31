@@ -20,9 +20,12 @@ data:
   prediction_file: "${paths.prediction}/predictions.csv"
 
 dvc:
-  remote_url: "${oc.env:GDRIVE_REMOTE_URL}"
-  client_id: "${oc.env:GDRIVE_CLIENT_ID}"
-  client_secret: "${oc.env:GDRIVE_CLIENT_SECRET}"
+  gdrive_remote_url: "${oc.env:GDRIVE_REMOTE_URL}"
+  gdrive_client_id: "${oc.env:GDRIVE_CLIENT_ID}"
+  gdrive_client_secret: "${oc.env:GDRIVE_CLIENT_SECRET}"
+  aws_remote_url: "${oc.env:AWS_REMOTE_URL}"
+  aws_region: "${oc.env:AWS_REGION}"
+  aws_profile: "${oc.env:AWS_PROFILE}"
 
 cleaning:
   skew_threshold: 0.5

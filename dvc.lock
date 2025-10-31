@@ -5,8 +5,8 @@ stages:
     deps:
     - path: params.yaml
       hash: md5
-      md5: 60b8cb1c34e7005a6b389b23151a4c3a
-      size: 1699
+      md5: 449572e0c8876bcf6f468eddafebdfb8
+      size: 1983
     - path: src/data/dataset.py
       hash: md5
       md5: 2e62008ec476042d5cd1ef6f82dbfef9
@@ -25,12 +25,12 @@ stages:
       size: 43747
     - path: params.yaml
       hash: md5
-      md5: 60b8cb1c34e7005a6b389b23151a4c3a
-      size: 1699
+      md5: 449572e0c8876bcf6f468eddafebdfb8
+      size: 1983
     - path: src/data/cleaning.py
       hash: md5
-      md5: 2aa4c3bd8988da18b98403351e4579c2
-      size: 511
+      md5: d99905b678bc8fa62a6d3e071ffc2a62
+      size: 474
     outs:
     - path: data/interim/energy_modified_clean.csv
       hash: md5
@@ -45,8 +45,8 @@ stages:
       size: 47827
     - path: params.yaml
       hash: md5
-      md5: 60b8cb1c34e7005a6b389b23151a4c3a
-      size: 1699
+      md5: 449572e0c8876bcf6f468eddafebdfb8
+      size: 1983
     - path: src/data/features.py
       hash: md5
       md5: c745880bf3af0a24b1806243cb3aff61
@@ -67,8 +67,8 @@ stages:
       nfiles: 4
     - path: params.yaml
       hash: md5
-      md5: 60b8cb1c34e7005a6b389b23151a4c3a
-      size: 1699
+      md5: 449572e0c8876bcf6f468eddafebdfb8
+      size: 1983
     - path: src/modeling/train.py
       hash: md5
       md5: 989f55cc5bee198b5a411b99c41b54a0
@@ -100,8 +100,8 @@ stages:
       size: 566399
     - path: params.yaml
       hash: md5
-      md5: 60b8cb1c34e7005a6b389b23151a4c3a
-      size: 1699
+      md5: 449572e0c8876bcf6f468eddafebdfb8
+      size: 1983
     - path: src/modeling/predict.py
       hash: md5
       md5: adc76cfd1586247df19b7423e95a8780

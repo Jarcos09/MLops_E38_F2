@@ -127,9 +127,13 @@ help:
 #################################################################################
 
 ## Configura DVC con remoto y credenciales
-.PHONY: dvc_setup
-dvc_setup:
-	python -m src.config.config
+.PHONY: dvc_gdrive_setup
+dvc_gdrive_setup:
+	python -m src.config.dvc_setup gdrive
+
+.PHONY: dvc_aws_setup
+dvc_aws_setup:
+	python -m src.config.dvc_setup aws
 
 ## Reproduce todo el pipeline según dvc.yaml
 .PHONY: dvc_repro
