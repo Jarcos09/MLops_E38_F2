@@ -115,10 +115,11 @@ class ModelTrainer:
 
     def train_xgboost(self):
         """
-        Entrena un modelo XGBoost Multi-Output con búsqueda opcional de hiperparámetros.
-        Registra métricas y el mejor modelo en MLflow.
+        Este método se encarga de entrenar y evaluar un modelo XGBoost para regresión multi-salida. 
+        Al igual que el método anterior, implementa una búsqueda manual en cuadrícula de hiperparámetros.
+        Registra cada intento como una ejecución (run) anidada en MLFlow y selecciona el mejor modelo basándose 
+        en la métrica objetiva definida en params.yaml (self.config).
         """
-
         logger.info("Iniciando entrenamiento de modelo XGBoost Multi-Output")
 
         # Configuración base
