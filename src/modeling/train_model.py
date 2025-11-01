@@ -15,7 +15,8 @@ class ModelTrainer:
         El constructor de la clase inicializa el estado del objeto ModelTrainer. 
         Recibe los datos preparados y un diccionario de configuración, 
         y establece la conexión con el servidor de tracking de MLFlow.
-        PARAMETROS
+        
+        Parámetros
         X_train (DataFrame/Array): Características para el conjunto de entrenamiento.
         X_test (DataFrame/Array): Características para el conjunto de prueba.
         y_train (Series/Array): Etiquetas/objetivos para el conjunto de entrenamiento.
