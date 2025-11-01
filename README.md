@@ -224,7 +224,12 @@ http://localhost:5000
 
 Se puede utilizar el comando:
 ```bash
-make mlflow-server
+make dvc_gdrive_setup
+```
+o
+
+```bash
+make dvc_aws_setup
 ```
 
 También, se puede inicializar manualmente de la siguiente manera:
