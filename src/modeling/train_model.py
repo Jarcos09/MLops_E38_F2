@@ -9,19 +9,19 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 class ModelTrainer:
-    """
-    __init__
-    El constructor de la clase inicializa el estado del objeto ModelTrainer. 
-    Recibe los datos preparados y un diccionario de configuración, 
-    y establece la conexión con el servidor de tracking de MLFlow.
-    PARAMETROS
-    X_train (DataFrame/Array): Características para el conjunto de entrenamiento.
-    X_test (DataFrame/Array): Características para el conjunto de prueba.
-    y_train (Series/Array): Etiquetas/objetivos para el conjunto de entrenamiento.
-    y_test (Series/Array): Etiquetas/objetivos para el conjunto de prueba.
-    config (dict): Un diccionario que contiene los parámetros de configuración del proyecto (leído de params.yaml).
-    """
     def __init__(self, X_train, X_test, y_train, y_test, config):
+        """
+        __init__
+        El constructor de la clase inicializa el estado del objeto ModelTrainer. 
+        Recibe los datos preparados y un diccionario de configuración, 
+        y establece la conexión con el servidor de tracking de MLFlow.
+        PARAMETROS
+        X_train (DataFrame/Array): Características para el conjunto de entrenamiento.
+        X_test (DataFrame/Array): Características para el conjunto de prueba.
+        y_train (Series/Array): Etiquetas/objetivos para el conjunto de entrenamiento.
+        y_test (Series/Array): Etiquetas/objetivos para el conjunto de prueba.
+        config (dict): Un diccionario que contiene los parámetros de configuración del proyecto (leído de params.yaml).
+        """
         self.X_train = X_train
         self.X_test = X_test
         self.y_train = y_train
@@ -30,19 +30,16 @@ class ModelTrainer:
         self.input_example = self.X_train.iloc[:2]
         mlflow.set_tracking_uri(self.config.get("mlflow_tracking_uri", ""))
 
-    """ 
-    train_random_forest
-    Este método orquesta el entrenamiento de un modelo Random Forest para tareas de regresión multi-salida. 
-    Implementa una búsqueda manual en cuadrícula (Grid Search) sobre los hiperparámetros especificados en el archivo de configuración (params.yaml).
-    Utiliza MLFlow para el seguimiento jerárquico de experimentos, registrando cada combinación de hiperparámetros como una ejecución (run) anidada. 
-    Finalmente, selecciona y registra el mejor modelo basándose en una métrica objetivo configurable (ej. RMSE o R²).
-    """
+    
     def train_random_forest(self):
+        """ 
+        train_random_forest
+        Este método orquesta el entrenamiento de un modelo Random Forest para tareas de regresión multi-salida. 
+        Implementa una búsqueda manual en cuadrícula (Grid Search) sobre los hiperparámetros especificados en el archivo de configuración (params.yaml).
+        Utiliza MLFlow para el seguimiento jerárquico de experimentos, registrando cada combinación de hiperparámetros como una ejecución (run) anidada. 
+        Finalmente, selecciona y registra el mejor modelo basándose en una métrica objetivo configurable (ej. RMSE o R²).
         """
-        Entrena un modelo Random Forest Multi-Output con búsqueda manual de hiperparámetros.
-        Registra cada combinación como run anidado en MLflow y selecciona el mejor modelo
-        según la métrica definida en config["best_metric"].
-        """
+        
         logger.info("Iniciando búsqueda de hiperparámetros para Random Forest Multi-Output")
 
         # Configuración del grid y de la métrica a optimizar
