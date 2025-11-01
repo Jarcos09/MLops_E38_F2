@@ -247,9 +247,13 @@ class ModelTrainer:
 
     def log_model(self, model, model_name, model_path, params=None):
             """
+            Este método auxiliar gestiona la serialización local del mejor modelo entrenado y su registro detallado en MLFlow. 
+            Se encarga de loguear los parámetros finales, registrar el modelo en el MLFlow Model Registry (permitiendo el control de versiones del modelo) 
+            y guardar una copia local del archivo del modelo.
             Registra un modelo en MLflow con ejemplo de entrada, parámetros y versión.
-            Si el modelo ya existe, crea una nueva versión.
+            Si el modelo ya existe, crea una nueva versión.           
             """
+        
             logger.info(f"Registrando modelo '{model_name}' en MLflow...")
 
             # Guardar modelo localmente
