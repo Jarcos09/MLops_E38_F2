@@ -76,12 +76,6 @@ class DataPreprocessor:
         Divide los datos en conjuntos de entrenamiento y prueba, aplica la transformación
         de las variables objetivo (`PowerTransformer`) y ejecuta la codificación definida
         en el pipeline.
-
-        Retorna
-        -------
-        tuple
-            (X_train_proc, X_test_proc, y_train, y_test, train_idx, test_idx)
-            Conjuntos transformados listos para el entrenamiento y evaluación del modelo.
         """
         X_train, X_test, y_train, y_test = train_test_split(
             self.X, self.y,
