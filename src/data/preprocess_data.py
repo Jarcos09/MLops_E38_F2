@@ -97,6 +97,25 @@ class DataPreprocessor:
         """
         Guarda los conjuntos procesados (X e y) en formato CSV en las rutas
         definidas en `output_paths`. Incluye los nombres de características generadas.
+    
+        Parámetros
+        X_train_proc : np.ndarray
+            Matriz de variables predictoras transformadas del conjunto de entrenamiento.
+    
+        X_test_proc : np.ndarray
+            Matriz de variables predictoras transformadas del conjunto de prueba.
+    
+        y_train : pd.DataFrame
+            Conjunto de variables objetivo transformadas correspondientes al entrenamiento.
+    
+        y_test : pd.DataFrame
+            Conjunto de variables objetivo transformadas correspondientes a la prueba.
+    
+        train_idx : pd.Index
+            Índices originales del conjunto de entrenamiento, usados para mantener la referencia al exportar.
+    
+        test_idx : pd.Index
+            Índices originales del conjunto de prueba, usados para mantener la referencia al exportar.
         """
         pd.DataFrame(X_train_proc, columns=self.feature_names, index=train_idx).to_csv(self.output_paths["X_TRAIN"], index=False)
         pd.DataFrame(X_test_proc, columns=self.feature_names, index=test_idx).to_csv(self.output_paths["X_TEST"], index=False)
