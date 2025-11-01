@@ -9,6 +9,16 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 class ModelTrainer:
+    ## El constructor de la clase inicializa el estado del objeto ModelTrainer. 
+    ## Recibe los datos preparados y un diccionario de configuración, 
+    ## y establece la conexión con el servidor de tracking de MLFlow.
+    ## PARAMETROS
+    # X_train (DataFrame/Array): Características para el conjunto de entrenamiento.
+    # X_test (DataFrame/Array): Características para el conjunto de prueba.
+    # y_train (Series/Array): Etiquetas/objetivos para el conjunto de entrenamiento.
+    # y_test (Series/Array): Etiquetas/objetivos para el conjunto de prueba.
+    # config (dict): Un diccionario que contiene los parámetros de configuración del proyecto (leído de params.yaml).
+    
     def __init__(self, X_train, X_test, y_train, y_test, config):
         self.X_train = X_train
         self.X_test = X_test
