@@ -108,6 +108,7 @@ cd MLops_E38_F2/
 
 --------
 🔧 Recomendación previa a la ejecución
+
 Antes de ejecutar cualquier comando con make, asegúrate de:
 - Estar ubicado en la carpeta raíz del proyecto.
 - Tener activado el ambiente virtual correspondiente.
