@@ -203,9 +203,18 @@ class ModelTrainer:
 
     def log_metrics(self, y_pred):
             """
-            Registra métricas (RMSE y R²) para cada variable de salida en MLflow.
-            Admite múltiples salidas (MultiOutputRegressor).
+            Calcula y registra métricas de desempeño (RMSE y R²) por variable objetivo en MLflow.
+        
+            Este método permite evaluar de forma detallada el rendimiento del modelo cuando se
+            trabaja con múltiples salidas (por ejemplo, en un `MultiOutputRegressor`), generando
+            tanto métricas individuales por variable como promedios globales.  
+        
+            Parámetros
+            y_pred : np.ndarray
+                Matriz de predicciones del modelo con forma (n_muestras, n_salidas).
+                Cada columna representa una variable de salida.
             """
+    
             logger.info("Calculando métricas por variable de salida...")
 
             metrics = {}
