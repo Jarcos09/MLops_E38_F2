@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 class ModelTrainer:
     """
+    __init__
     El constructor de la clase inicializa el estado del objeto ModelTrainer. 
     Recibe los datos preparados y un diccionario de configuración, 
     y establece la conexión con el servidor de tracking de MLFlow.
@@ -29,6 +30,13 @@ class ModelTrainer:
         self.input_example = self.X_train.iloc[:2]
         mlflow.set_tracking_uri(self.config.get("mlflow_tracking_uri", ""))
 
+    """ 
+    train_random_forest
+    Este método orquesta el entrenamiento de un modelo Random Forest para tareas de regresión multi-salida. 
+    Implementa una búsqueda manual en cuadrícula (Grid Search) sobre los hiperparámetros especificados en el archivo de configuración (params.yaml).
+    Utiliza MLFlow para el seguimiento jerárquico de experimentos, registrando cada combinación de hiperparámetros como una ejecución (run) anidada. 
+    Finalmente, selecciona y registra el mejor modelo basándose en una métrica objetivo configurable (ej. RMSE o R²).
+    """
     def train_random_forest(self):
         """
         Entrena un modelo Random Forest Multi-Output con búsqueda manual de hiperparámetros.
