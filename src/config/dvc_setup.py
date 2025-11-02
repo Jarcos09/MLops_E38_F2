@@ -69,10 +69,13 @@ def dvc_aws_setup():
     logger.success("Configuración de AWS completada con éxito.")
 
 if __name__ == "__main__":
+    # Lectura y normalización de la opción ingresada por línea de comandos
     option = sys.argv[1].lower()
-    if option == "gdrive":
-        dvc_gdrive_setup()
-    elif option == "aws":
-        dvc_aws_setup()
+
+    # Selección de configuración según la opción
+    if option == "gdrive":  # Si el usuario elige "gdrive"
+        dvc_gdrive_setup()  # Ejecuta la configuración para Google Drive
+    elif option == "aws":   # Si el usuario elige "aws"
+        dvc_aws_setup()     # Ejecuta la configuración para AWS
     else:
         logger.error(f"Opción desconocida: {option}. Usa 'gdrive' o 'aws'.")
