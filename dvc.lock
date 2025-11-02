@@ -9,8 +9,8 @@ stages:
       size: 1983
     - path: src/data/dataset.py
       hash: md5
-      md5: 2e62008ec476042d5cd1ef6f82dbfef9
-      size: 368
+      md5: fafc99524749208cc3725ded91461e90
+      size: 787
     outs:
     - path: data/raw/energy_modified.csv
       hash: md5
@@ -29,8 +29,8 @@ stages:
       size: 1983
     - path: src/data/cleaning.py
       hash: md5
-      md5: d99905b678bc8fa62a6d3e071ffc2a62
-      size: 474
+      md5: 7aaae3e78b7f388cbe33c29f2eff4824
+      size: 1019
     outs:
     - path: data/interim/energy_modified_clean.csv
       hash: md5
@@ -49,8 +49,8 @@ stages:
       size: 1983
     - path: src/data/features.py
       hash: md5
-      md5: c745880bf3af0a24b1806243cb3aff61
-      size: 1248
+      md5: 318d1d041056235d549ce5c478c65a22
+      size: 2185
     outs:
     - path: data/processed/
       hash: md5
@@ -71,8 +71,8 @@ stages:
       size: 1983
     - path: src/modeling/train.py
       hash: md5
-      md5: 989f55cc5bee198b5a411b99c41b54a0
-      size: 1301
+      md5: ab5ffcdc753aef74c1e9f6118692d45a
+      size: 1911
     outs:
     - path: models/rf_regressor.pkl
       hash: md5
@@ -104,8 +104,8 @@ stages:
       size: 1983
     - path: src/modeling/predict.py
       hash: md5
-      md5: 6edccbe0d96229239b86390d4aa18760
-      size: 992
+      md5: ceacb6dd7eb789d6da8c9298a69009f3
+      size: 1592
     outs:
     - path: data/prediction/predictions.csv
       hash: md5
