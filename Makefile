@@ -59,10 +59,10 @@ create_environment:
 	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
 
 #################################################################################
-# MLflow Server                                                                 #
+# Gestión del servidor MLflow (inicio, detención, estado)                      #
 #################################################################################
 
-## Levanta MLflow Server local en http://localhost:5000
+## Levanta MLflow Server
 .PHONY: mlflow-server
 mlflow-server:
 	mlflow server \
@@ -70,6 +70,66 @@ mlflow-server:
 		--default-artifact-root ./mlruns \
 		--host 0.0.0.0 \
 		--port 5000
+
+# Inicia el servidor MLflow en segundo plano
+.PHONY: mlflow-start
+mlflow-start:
+	@if pgrep -f "mlflow" > /dev/null; then \
+		echo "MLflow ya está en ejecución (PID(s): $$(pgrep -f 'mlflow' | tr '\n' ' '))."; \
+	else \
+		echo "Iniciando el servidor de MLflow..."; \
+		nohup mlflow server \
+			--backend-store-uri sqlite:///mlflow.db \
+			--default-artifact-root ./mlruns \
+			--host 0.0.0.0 \
+			--port 5000 \
+			> mlflow.log 2>&1 & \
+		echo $$! > mlflow.pid; \
+		sleep 3; \
+		if pgrep -f "mlflow" > /dev/null; then \
+			PID=$$(cat mlflow.pid 2>/dev/null || echo "desconocido"); \
+			echo "MLflow iniciado correctamente (PID principal: $$PID)."; \
+		else \
+			echo "Error: MLflow no se pudo iniciar. Revisa el log en mlflow.log."; \
+			rm -f mlflow.pid; \
+		fi; \
+	fi
+
+# Detiene el servidor MLflow
+.PHONY: mlflow-stop
+mlflow-stop:
+	@echo "Intentando detener MLflow..."
+	@if [ -f mlflow.pid ]; then \
+		PID=$$(cat mlflow.pid); \
+		if ps -p $$PID > /dev/null 2>&1; then \
+			echo "Deteniendo MLflow con PID guardado ($$PID)..."; \
+			kill $$PID && rm -f mlflow.pid; \
+			sleep 2; \
+			if ps -p $$PID > /dev/null 2>&1; then \
+				echo "Error: el proceso $$PID sigue activo."; \
+			else \
+				echo "MLflow detenido correctamente (PID $$PID)."; \
+			fi; \
+		else \
+			echo "El PID guardado ($$PID) no está activo. Eliminando archivo mlflow.pid."; \
+			rm -f mlflow.pid; \
+		fi; \
+	else \
+		echo "No se encontró archivo mlflow.pid."; \
+	fi; \
+	\
+	echo "Limpiando posibles procesos residuales de MLflow..."; \
+	pkill -f "mlflow" 2>/dev/null && echo "Procesos adicionales de MLflow detenidos." || echo "No había procesos residuales de MLflow."; \
+	echo "MLflow completamente detenido."
+
+# Determina si MLflow está en ejecución
+.PHONY: mlflow-status
+mlflow-status:
+	@if pgrep -f "mlflow" > /dev/null; then \
+		echo "MLflow está en ejecución (PID(s): $$(pgrep -f 'mlflow' | tr '\n' ' '))."; \
+	else \
+		echo "MLflow no está en ejecución."; \
+	fi
 	
 #################################################################################
 # PROJECT RULES                                                                 #
@@ -93,7 +153,9 @@ FE:
 ## Make train
 .PHONY: train
 train:
-	$(PYTHON_INTERPRETER) -m src.modeling.train
+	make mlflow-start
+	@$(PYTHON_INTERPRETER) -m src.modeling.train
+	make mlflow-stop
 
 ## Make prepare: ejecuta data → clean_data → FE
 .PHONY: prepare
@@ -102,7 +164,9 @@ prepare: data clean_data FE
 ## Make predict
 .PHONY: predict
 predict:
-	$(PYTHON_INTERPRETER) -m src.modeling.predict
+	make mlflow-start
+	@$(PYTHON_INTERPRETER) -m src.modeling.predict
+	make mlflow-stop
 
 #################################################################################
 # Self Documenting Commands                                                     #
@@ -148,7 +212,9 @@ dvc_aws_setup:
 
 .PHONY: dvc_repro
 dvc_repro:
+	make mlflow-start
 	dvc repro
+	make mlflow-stop
 
 ## Sube los datos versionados al remoto (GDrive/S3)
 ## El comando dvc push utiliza los archivos de configuración dvc.yaml y dvc.lock, además del 

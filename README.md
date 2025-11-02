@@ -142,6 +142,21 @@ Ejecutar localmente servidor de MLFlow:
 make mlflow-server
 ```
 
+Inicia el servidor MLFLow:
+```bash
+make mlflow-start
+```
+
+Detiene el servidor MLFLow:
+```bash
+make mlflow-stop
+```
+
+Verifica si el servidor MLFLow está activo:
+```bash
+make mlflow-status
+```
+
 Realizar entrenamiento:
 ```bash
 make train
