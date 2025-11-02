@@ -291,7 +291,7 @@ dvc remote list
 Lista todos los objetos dentro de todos los subdirectorios:
 ```bash
 aws s3 ls s3://itesm-mna/202502-equipo38 --recursive --profile equipo38 | head
-```
+``` 
 
 --------
 
