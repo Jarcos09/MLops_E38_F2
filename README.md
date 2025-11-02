@@ -39,12 +39,14 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 │                                      generated with `pip freeze > requirements.txt`
 │               
 ├── setup.cfg                       <- Configuration file for flake8
+├── dvc.yaml                         <- DVC pipeline definition
+├── dvc.lock                         <- Locked versions of DVC tracked files
 │               
 └── src                             <- Source code for the project
     ├── __init__.py                 <- Makes `src` a Python module
     ├── utils
     │   ├── __init__.py
-    │   ├── cmd.py                  <- Functions to execute cmd commands
+    │   ├── cmd.py                  <- Helper functions to execute shell commands
     │   └── paths.py                <- Paths manager to create and ensure directories
     ├── config
     │   ├── __init__.py
@@ -60,7 +62,9 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
     │   └── preprocess_data.py      <- Preprocessing pipelines for ML
     └── modeling
         ├── __init__.py
+        ├── plots_modeling.py       <- Plot logic to generate figures
         ├── plots.py                <- Code to create visualizations
+        ├── predict_model.py        <- Model prediction logic and MLFlow integration
         ├── predict.py              <- Code to run model inference with trained models
         ├── train_model.py          <- Model training logic and MLFlow integration
         └── train.py                <- Entry point to train models
@@ -290,3 +294,22 @@ aws s3 ls s3://itesm-mna/202502-equipo38 --recursive --profile equipo38 | head
 ```
 
 --------
+
+## 📊 Plots
+
+### Generar plots
+
+Ejemplo de histograma:
+```bash
+python -m src.modeling.plots --plot-type histogram --column X3 --filename x3_hist.png
+```
+
+Ejemplo de scatter plot:
+```bash
+python -m src.modeling.plots --plot-type scatter --x X1 --y Y1 --filename x1_y1_scatter.png
+```
+
+Ejemplo de correlation matrix:
+```bash
+python -m src.modeling.plots --plot-type correlation --filename corr_matrix.png
+```
