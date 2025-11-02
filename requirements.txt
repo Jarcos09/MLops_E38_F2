@@ -46,3 +46,7 @@ loguru==0.7.2
 
 # Manejo de configuración
 omegaconf>=2.3.0
+
+#Librerias adicionales
+typer==0.20.0
+
