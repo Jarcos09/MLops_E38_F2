@@ -39,8 +39,8 @@ Fase 2 Avance de Proyecto, Gestion del Proyecto de Machine Learning
 │                                      generated with `pip freeze > requirements.txt`
 │               
 ├── setup.cfg                       <- Configuration file for flake8
-├── dvc.yaml                         <- DVC pipeline definition
-├── dvc.lock                         <- Locked versions of DVC tracked files
+├── dvc.yaml                        <- DVC pipeline definition
+├── dvc.lock                        <- Locked versions of DVC tracked files
 │               
 └── src                             <- Source code for the project
     ├── __init__.py                 <- Makes `src` a Python module
