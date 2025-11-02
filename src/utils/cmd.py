@@ -2,6 +2,9 @@ import subprocess
 import sys
 from loguru import logger
 
+# Funciones auxiliares para ejecución de comandos de shell
+
+# Ejecuta un comando de shell y muestra logs, deteniendo el script si falla
 def run_cmd(cmd: list):
     """Ejecuta un comando de shell y muestra logs."""
     try:
@@ -11,6 +14,7 @@ def run_cmd(cmd: list):
         logger.error(f"Error ejecutando comando: {e}")
         sys.exit(1)
 
+# Ejecuta un comando de shell y devuelve su salida como string
 def run_cmd_output(cmd: list) -> str:
     """Ejecuta un comando de shell y devuelve su salida como texto."""
     try:
