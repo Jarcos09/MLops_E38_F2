@@ -25,38 +25,38 @@ class DataPreprocessor:
             Configuración del preprocesamiento (p. ej. `target_columns`, `drop_columns`,
             `encoding`, `test_size`, `random_state`, `target_transform`).
         """
-        self.input_path = input_path
-        self.output_paths = output_paths
-        self.config = config
-        self.df = None
-        self.X = None
-        self.y = None
-        self.pipeline = None
-        self.feature_names = None
+        self.input_path = input_path        # Ruta del dataset limpio
+        self.output_paths = output_paths    # Diccionario de rutas de salida
+        self.config = config                # Configuración de preprocesamiento
+        self.df = None                      # DataFrame cargado en memoria
+        self.X = None                       # Variables predictoras
+        self.y = None                       # Variables objetivo
+        self.pipeline = None                # Pipeline de codificación
+        self.feature_names = None           # Nombres de características después de codificación
 
     def load_data(self):
         """
         Carga el dataset limpio desde la ruta especificada en `input_path`
         y lo almacena en memoria como un DataFrame.
         """
-        logger.info(f"Cargando dataset limpio desde: {self.input_path}")
-        self.df = pd.read_csv(self.input_path)
+        logger.info(f"Cargando dataset limpio desde: {self.input_path}")    # Log de carga
+        self.df = pd.read_csv(self.input_path)                              # Lectura CSV
 
     def separate_variables(self):
         """
         Separa el DataFrame cargado en variables predictoras (`X`)
         y variables objetivo (`y`), de acuerdo con las columnas definidas en `config`.
         """
-        self.X = self.df.drop(columns=self.config["target_columns"] + self.config["drop_columns"])
-        self.y = self.df[self.config["target_columns"]].copy()
+        self.X = self.df.drop(columns=self.config["target_columns"] + self.config["drop_columns"])  # X
+        self.y = self.df[self.config["target_columns"]].copy()                                      # y
 
     def encode_features(self):
         """
         Configura la codificación categórica de las variables mediante `OneHotEncoder`
         dentro de un `Pipeline`, según los parámetros definidos en `config["encoding"]`.
         """
-        cat_features = self.X.columns.tolist()
-        self.X[cat_features] = self.X[cat_features].astype("category")
+        cat_features = self.X.columns.tolist()                          # Todas las columnas como categóricas
+        self.X[cat_features] = self.X[cat_features].astype("category")  # Conversión a tipo category
 
         encoder = OneHotEncoder(
             drop=self.config["encoding"]["drop"],
@@ -83,13 +83,13 @@ class DataPreprocessor:
             random_state=self.config["random_state"]
         )
 
-        yao = PowerTransformer(method=self.config["target_transform"])
+        yao = PowerTransformer(method=self.config["target_transform"])                          # Transformación de columnas objetivo
         y_train = pd.DataFrame(yao.fit_transform(y_train), columns=self.y.columns, index=y_train.index)
         y_test = pd.DataFrame(yao.transform(y_test), columns=self.y.columns, index=y_test.index)
 
-        X_train_proc = self.pipeline.fit_transform(X_train)
-        X_test_proc = self.pipeline.transform(X_test)
-        self.feature_names = self.pipeline.named_steps['preprocessor'].get_feature_names_out()
+        X_train_proc = self.pipeline.fit_transform(X_train)                                     # Ajusta y transforma entrenamiento
+        X_test_proc = self.pipeline.transform(X_test)                                           # Transforma prueba
+        self.feature_names = self.pipeline.named_steps['preprocessor'].get_feature_names_out()  # Nombres de columnas
 
         return X_train_proc, X_test_proc, y_train, y_test, X_train.index, X_test.index
 
@@ -121,15 +121,15 @@ class DataPreprocessor:
         pd.DataFrame(X_test_proc, columns=self.feature_names, index=test_idx).to_csv(self.output_paths["X_TEST"], index=False)
         y_train.to_csv(self.output_paths["Y_TRAIN"], index=False)
         y_test.to_csv(self.output_paths["Y_TEST"], index=False)
-        logger.success("Preprocesamiento completado y archivos guardados.")
+        logger.success("Preprocesamiento completado y archivos guardados.")  # Log de éxito
 
     def run(self):
         """
         Ejecuta de forma secuencial todo el pipeline de preprocesamiento:
         carga, separación, codificación, transformación y guardado de datos.
         """
-        self.load_data()
-        self.separate_variables()
-        self.encode_features()
-        X_train_proc, X_test_proc, y_train, y_test, train_idx, test_idx = self.split_and_transform()
-        self.save_outputs(X_train_proc, X_test_proc, y_train, y_test, train_idx, test_idx)
+        self.load_data()                                                                                # Carga de dataset
+        self.separate_variables()                                                                       # Separación X e y
+        self.encode_features()                                                                          # Configuración de codificación
+        X_train_proc, X_test_proc, y_train, y_test, train_idx, test_idx = self.split_and_transform()    # División y transformación
+        self.save_outputs(X_train_proc, X_test_proc, y_train, y_test, train_idx, test_idx)              # Guardado de archivos
