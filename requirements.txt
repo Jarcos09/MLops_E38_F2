@@ -49,4 +49,4 @@ omegaconf>=2.3.0
 
 #Librerias adicionales
 typer==0.20.0
-
+directory_tree==1.0.0
